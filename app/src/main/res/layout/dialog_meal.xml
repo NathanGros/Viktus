@@ -6,36 +6,36 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/btn_close"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <ImageButton
             android:id="@+id/btn_close"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close"
             android:src="@drawable/ic_close" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,33 +110,54 @@
                         android:layout_height="match_parent"
                         android:importantForAccessibility="no"
                         android:scaleType="centerCrop" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_remove_image"
+                        style="@style/Widget.Material3.Button.IconButton.Filled"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:iconGravity="textStart"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
+                        android:padding="0dp"
+                        android:contentDescription="Remove image"
+                        android:visibility="gone"
+                        app:backgroundTint="#C62828"
+                        app:icon="@drawable/ic_trash"
+                        app:iconTint="@android:color/white" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_remove_image"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="Remove image"
-                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:text="Ingredients"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add_ingredient"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Add ingredient" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_ingredient"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:iconGravity="textStart"
+                    android:padding="0dp"
+                    android:contentDescription="Add ingredient"
+                    app:icon="@drawable/ic_add" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/empty_ingredients"
@@ -145,6 +166,8 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="No ingredients yet"
+                android:alpha="0.5"
+                android:textStyle="italic"
                 android:visibility="gone" />
 
             <!-- The -16dp margins cancel the item margin so rows line up with the fields above -->
