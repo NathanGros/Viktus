@@ -22,6 +22,8 @@ import java.util.List;
 public class MealsFragment extends Fragment {
 
     private MealAdapter adapter;
+    private AppViewModel vm;
+    private View emptyText;
 
     public MealsFragment() {
         super(R.layout.fragment_meals);
@@ -34,11 +36,16 @@ public class MealsFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.meals_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        AppViewModel vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        emptyText = view.findViewById(R.id.meals_empty);
 
         adapter = new MealAdapter(vm.meals);
         list.setAdapter(adapter);
-        vm.loaded.observe(getViewLifecycleOwner(), ok -> adapter.notifyDataSetChanged());
+
+        vm.loaded.observe(getViewLifecycleOwner(), ok -> {
+            adapter.notifyDataSetChanged();
+            refreshEmptyState();
+        });
 
         // Long press + drag to reorder
         ItemTouchHelper helper = new ItemTouchHelper(
@@ -76,6 +83,7 @@ public class MealsFragment extends Fragment {
                     if (MealDialog.ACTION_DELETE.equals(action) || MealDialog.ACTION_EATEN.equals(action)) {
                         adapter.removeMeal(position);
                         vm.saveMeals();
+                        refreshEmptyState();
                         return;
                     }
 
@@ -86,6 +94,7 @@ public class MealsFragment extends Fragment {
                         adapter.updateMeal(position, meal);
                     }
                     vm.saveMeals();
+                    refreshEmptyState();
                 });
 
         // "+" button: add mode
@@ -97,4 +106,9 @@ public class MealsFragment extends Fragment {
                 MealDialog.newView(position, meal).show(getChildFragmentManager(), "meal_dialog"));
     }
 
+    private void refreshEmptyState() {
+        // Wait for the database to be read, otherwise the text flashes at startup
+        boolean loaded = Boolean.TRUE.equals(vm.loaded.getValue());
+        emptyText.setVisibility(loaded && vm.meals.isEmpty() ? View.VISIBLE : View.GONE);
+    }
 }

@@ -16,6 +16,8 @@ import java.util.List;
 
 public class SuppliesFragment extends Fragment {
     private SupplyAdapter adapter;
+    private AppViewModel vm;
+    private View emptyText;
 
     public SuppliesFragment() {
         super(R.layout.fragment_supplies);
@@ -29,12 +31,16 @@ public class SuppliesFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.supplies_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        AppViewModel vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        emptyText = view.findViewById(R.id.supplies_empty);
 
         adapter = new SupplyAdapter(vm.supplies, SupplyAdapter.Mode.NONE);
         list.setAdapter(adapter);
-        // Refresh once the database has been read
-        vm.loaded.observe(getViewLifecycleOwner(), ok -> adapter.notifyDataSetChanged());
+
+        vm.loaded.observe(getViewLifecycleOwner(), ok -> {
+            adapter.notifyDataSetChanged();
+            refreshEmptyState();
+        });
 
         // Long press + drag to reorder
         ItemTouchHelper helper = new ItemTouchHelper(
@@ -71,6 +77,7 @@ public class SuppliesFragment extends Fragment {
                     if (result.getBoolean(SupplyDialog.KEY_DELETED)) {
                         adapter.removeSupply(position);
                         vm.saveSupplies();
+                        refreshEmptyState();
                         return;
                     }
 
@@ -84,6 +91,7 @@ public class SuppliesFragment extends Fragment {
                         adapter.updateSupply(position, name, quantity, unit);
                     }
                     vm.saveSupplies();
+                    refreshEmptyState();
                 });
 
         view.findViewById(R.id.fab_add_supply).setOnClickListener(v ->
@@ -92,5 +100,11 @@ public class SuppliesFragment extends Fragment {
         adapter.setOnItemClickListener((supply, position) ->
                 SupplyDialog.newEdit(position, supply)
                         .show(getChildFragmentManager(), "supply_dialog"));
+    }
+
+    private void refreshEmptyState() {
+        // Wait for the database to be read, otherwise the text flashes at startup
+        boolean loaded = Boolean.TRUE.equals(vm.loaded.getValue());
+        emptyText.setVisibility(loaded && vm.supplies.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

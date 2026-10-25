@@ -81,12 +81,17 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
             holder.checkBox.setOnCheckedChangeListener((btn, isChecked) -> s.checked = isChecked);
         }
 
-        holder.itemView.setOnClickListener(v -> {
-            int pos = holder.getAdapterPosition();
-            if (clickListener != null && pos != RecyclerView.NO_POSITION) {
-                clickListener.onItemClick(supplies.get(pos), pos);
-            }
-        });
+        if (clickListener != null) {
+            holder.itemView.setOnClickListener(v -> {
+                int pos = holder.getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    clickListener.onItemClick(supplies.get(pos), pos);
+                }
+            });
+        } else {
+            holder.itemView.setOnClickListener(null);
+            holder.itemView.setClickable(false);
+        }
     }
 
     @Override

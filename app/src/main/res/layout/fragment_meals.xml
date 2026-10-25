@@ -28,6 +28,15 @@
             android:paddingBottom="88dp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/meals_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Nothing planned "
+        android:textStyle="italic"
+        android:visibility="gone" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_meal"
         android:layout_width="wrap_content"
