@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -200,13 +201,31 @@ public class MealDialog extends DialogFragment {
         }
         refreshImage();
 
-        // Ingredients list (no leading icon = Mode.NONE)
-        ingredientAdapter = new SupplyAdapter(ingredients, SupplyAdapter.Mode.NONE);
+        // Ingredients list
+        ingredientAdapter = new SupplyAdapter(ingredients, SupplyAdapter.Mode.STATUS);
         ingredientsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         ingredientsList.setAdapter(ingredientAdapter);
         refreshEmptyState();
 
         if (editable) {
+            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                    ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+                @Override
+                public boolean onMove(@NonNull RecyclerView rv,
+                                      @NonNull RecyclerView.ViewHolder from,
+                                      @NonNull RecyclerView.ViewHolder to) {
+                    ingredientAdapter.moveItem(from.getAdapterPosition(),
+                            to.getAdapterPosition());
+                    return true;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
+                    // swipe disabled
+                }
+            }).attachToRecyclerView(ingredientsList);
+
             // Reuse the supply popup to add / edit an ingredient
             btnAddIngredient.setOnClickListener(v ->
                     SupplyDialog.newAdd().show(getChildFragmentManager(), "ingredient_dialog"));
