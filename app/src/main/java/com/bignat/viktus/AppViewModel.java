@@ -1,0 +1,62 @@
+package com.bignat.viktus;
+
+import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class AppViewModel extends AndroidViewModel {
+
+    // The lists your adapters work on directly
+    public final List<Supply> supplies = new ArrayList<>();
+    public final List<Meal> meals = new ArrayList<>();
+    public final MutableLiveData<Boolean> loaded = new MutableLiveData<>(false);
+
+    private final AppDao dao;
+    // One thread = writes happen in the order they were requested
+    private final ExecutorService io = Executors.newSingleThreadExecutor();
+
+    public AppViewModel(@NonNull Application app) {
+        super(app);
+        dao = AppDatabase.get(app).dao();
+
+        io.execute(() -> {
+            List<Supply> s = dao.getSupplies();
+            List<Meal> m = dao.getMeals();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                supplies.addAll(s);
+                meals.addAll(m);
+                loaded.setValue(true);
+            });
+        });
+    }
+
+    public void saveSupplies() {
+        // Snapshot on the main thread so the background write can't race with edits
+        List<Supply> snapshot = new ArrayList<>();
+        for (int i = 0; i < supplies.size(); i++) {
+            Supply c = supplies.get(i).copy();
+            c.position = i;
+            snapshot.add(c);
+        }
+        io.execute(() -> dao.replaceSupplies(snapshot));
+    }
+
+    public void saveMeals() {
+        List<Meal> snapshot = new ArrayList<>();
+        for (int i = 0; i < meals.size(); i++) {
+            Meal c = meals.get(i).copy();
+            c.position = i;
+            snapshot.add(c);
+        }
+        io.execute(() -> dao.replaceMeals(snapshot));
+    }
+}

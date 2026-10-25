@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,13 +29,12 @@ public class SuppliesFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.supplies_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<Supply> supplies = new ArrayList<>();
-        supplies.add(new Supply("Egg", 6, Unit.PIECE, false));
-        supplies.add(new Supply("Tomato", 4, Unit.PIECE, false));
-        supplies.add(new Supply("Pasta", 1, Unit.KILOGRAM, false));
+        AppViewModel vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        adapter = new SupplyAdapter(supplies, SupplyAdapter.Mode.NONE);
+        adapter = new SupplyAdapter(vm.supplies, SupplyAdapter.Mode.NONE);
         list.setAdapter(adapter);
+        // Refresh once the database has been read
+        vm.loaded.observe(getViewLifecycleOwner(), ok -> adapter.notifyDataSetChanged());
 
         // Long press + drag to reorder
         ItemTouchHelper helper = new ItemTouchHelper(
@@ -54,6 +54,12 @@ public class SuppliesFragment extends Fragment {
                     public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
                         // swipe disabled
                     }
+
+                    @Override
+                    public void clearView(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh) {
+                        super.clearView(rv, vh);
+                        vm.saveSupplies();
+                    }
                 });
         helper.attachToRecyclerView(list);
 
@@ -64,6 +70,7 @@ public class SuppliesFragment extends Fragment {
 
                     if (result.getBoolean(SupplyDialog.KEY_DELETED)) {
                         adapter.removeSupply(position);
+                        vm.saveSupplies();
                         return;
                     }
 
@@ -76,6 +83,7 @@ public class SuppliesFragment extends Fragment {
                     } else {
                         adapter.updateSupply(position, name, quantity, unit);
                     }
+                    vm.saveSupplies();
                 });
 
         view.findViewById(R.id.fab_add_supply).setOnClickListener(v ->

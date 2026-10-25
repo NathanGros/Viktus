@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +52,8 @@ public class MealDialog extends DialogFragment {
     private static final String ARG_MODE = "mode";
     private static final String STATE_INGREDIENTS = "state_ingredients";
     private static final String STATE_IMAGE = "state_image";
+
+    private AppViewModel vm;
 
     private enum DialogMode { ADD, EDIT, VIEW }
 
@@ -143,6 +146,7 @@ public class MealDialog extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         boolean editable = mode != DialogMode.VIEW;
 
@@ -205,6 +209,7 @@ public class MealDialog extends DialogFragment {
         ingredientAdapter = new SupplyAdapter(ingredients, SupplyAdapter.Mode.STATUS);
         ingredientsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         ingredientsList.setAdapter(ingredientAdapter);
+        refreshStatus();
         refreshEmptyState();
 
         if (editable) {
@@ -251,6 +256,7 @@ public class MealDialog extends DialogFragment {
                                 ingredientAdapter.updateSupply(pos, name, quantity, unit);
                             }
                         }
+                        refreshStatus();
                         refreshEmptyState();
                     });
         }
@@ -299,6 +305,14 @@ public class MealDialog extends DialogFragment {
             dismiss();
             MealDialog.newEdit(position, original).show(fm, "meal_dialog");
         });
+    }
+
+    // Checkmark = enough in stock, cross = missing or not enough
+    private void refreshStatus() {
+        for (Supply s : ingredients) {
+            s.checked = StockChecker.hasEnough(s, vm.supplies);
+        }
+        ingredientAdapter.notifyDataSetChanged();
     }
 
     private void sendResult(String action, @Nullable Meal meal) {

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,12 +34,11 @@ public class MealsFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.meals_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<Meal> meals = new ArrayList<>(Arrays.asList(
-                new Meal("Spaghetti bolognese"),
-                new Meal("Cantonese rice"),
-                new Meal("Omelette")));
-        adapter = new MealAdapter(meals);
+        AppViewModel vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+        adapter = new MealAdapter(vm.meals);
         list.setAdapter(adapter);
+        vm.loaded.observe(getViewLifecycleOwner(), ok -> adapter.notifyDataSetChanged());
 
         // Long press + drag to reorder
         ItemTouchHelper helper = new ItemTouchHelper(
@@ -58,6 +58,12 @@ public class MealsFragment extends Fragment {
                     public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
                         // swipe disabled
                     }
+
+                    @Override
+                    public void clearView(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh) {
+                        super.clearView(rv, vh);
+                        vm.saveMeals();
+                    }
                 });
         helper.attachToRecyclerView(list);
 
@@ -69,6 +75,7 @@ public class MealsFragment extends Fragment {
 
                     if (MealDialog.ACTION_DELETE.equals(action) || MealDialog.ACTION_EATEN.equals(action)) {
                         adapter.removeMeal(position);
+                        vm.saveMeals();
                         return;
                     }
 
@@ -78,6 +85,7 @@ public class MealsFragment extends Fragment {
                     } else {
                         adapter.updateMeal(position, meal);
                     }
+                    vm.saveMeals();
                 });
 
         // "+" button: add mode
