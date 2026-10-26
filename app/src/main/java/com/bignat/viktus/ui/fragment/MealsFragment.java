@@ -85,7 +85,10 @@ public class MealsFragment extends Fragment {
 
                     if (MealDialog.ACTION_DELETE.equals(action) || MealDialog.ACTION_EATEN.equals(action)) {
                         if (MealDialog.ACTION_EATEN.equals(action)) {
-                            vm.addToHistory(vm.meals.get(position));
+                            // Grab the meal before it leaves the list
+                            Meal eaten = vm.meals.get(position);
+                            vm.addToHistory(eaten);
+                            vm.consumeIngredients(eaten);
                         }
                         adapter.removeMeal(position);
                         vm.saveMeals();

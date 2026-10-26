@@ -161,6 +161,7 @@ public class SuppliesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (adapter != null) adapter.notifyDataSetChanged();
         if (hiddenAdapter != null && hideUsed) refreshHidden();
     }
 }

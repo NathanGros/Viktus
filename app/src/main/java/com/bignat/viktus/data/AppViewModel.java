@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.bignat.viktus.logic.StockConsumer;
 import com.bignat.viktus.model.HistoryEntry;
 import com.bignat.viktus.model.Meal;
 import com.bignat.viktus.model.SavedEntry;
@@ -126,5 +127,11 @@ public class AppViewModel extends AndroidViewModel {
                 for (File f : images) f.delete();
             }
         });
+    }
+
+    // Called when a meal is eaten: takes its ingredients out of the stock
+    public void consumeIngredients(Meal meal) {
+        StockConsumer.consume(supplies, meal.supplies);
+        saveSupplies();
     }
 }
