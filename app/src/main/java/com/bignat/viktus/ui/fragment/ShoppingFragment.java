@@ -44,6 +44,10 @@ public class ShoppingFragment extends Fragment {
 
         // Recompute once the database has been read
         vm.loaded.observe(getViewLifecycleOwner(), ok -> refresh());
+
+        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
+                startActivity(new android.content.Intent(requireContext(),
+                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     // With the pager, onResume runs each time you swipe to this page,

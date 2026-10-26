@@ -130,6 +130,10 @@ public class SuppliesFragment extends Fragment {
         adapter.setOnItemClickListener((supply, position) ->
                 SupplyDialog.newEdit(position, supply)
                         .show(getChildFragmentManager(), "supply_dialog"));
+
+        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
+                startActivity(new android.content.Intent(requireContext(),
+                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     private void refreshEmptyState() {

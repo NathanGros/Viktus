@@ -105,6 +105,10 @@ public class MealsFragment extends Fragment {
         // Row tap: view mode
         adapter.setOnItemClickListener((meal, position) ->
                 MealDialog.newView(position, meal).show(getChildFragmentManager(), "meal_dialog"));
+
+        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
+                startActivity(new android.content.Intent(requireContext(),
+                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     @Override

@@ -88,6 +88,10 @@ public class SavesFragment extends Fragment {
             adapter.notifyDataSetChanged();
             refreshEmptyState();
         });
+
+        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
+                startActivity(new android.content.Intent(requireContext(),
+                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     // Runs each time you swipe to this page, so meals saved from History show up
