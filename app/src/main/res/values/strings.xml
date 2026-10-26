@@ -86,4 +86,7 @@
     <string name="clear_data_message">This permanently deletes all meals, supplies, history, saved meals and photos. This cannot be undone.</string>
     <string name="clear_data_confirm">Clear</string>
     <string name="toast_data_cleared">All data cleared</string>
+    <string name="clean_images">Delete unused photos</string>
+    <string name="toast_images_cleaned">%1$d unused photo(s) deleted</string>
+    <string name="toast_no_unused_images">No unused photos</string>
 </resources>

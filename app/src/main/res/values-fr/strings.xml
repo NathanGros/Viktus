@@ -76,4 +76,7 @@
     <string name="clear_data_message">Cela supprime définitivement tous les repas, produits, l\'historique, les repas enregistrés et les photos. Cette action est irréversible.</string>
     <string name="clear_data_confirm">Effacer</string>
     <string name="toast_data_cleared">Données effacées</string>
+    <string name="clean_images">Supprimer les photos inutilisées</string>
+    <string name="toast_images_cleaned">%1$d photo(s) inutilisée(s) supprimée(s)</string>
+    <string name="toast_no_unused_images">Aucune photo inutilisée</string>
 </resources>

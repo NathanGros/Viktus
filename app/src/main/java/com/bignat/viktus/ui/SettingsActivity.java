@@ -1,6 +1,10 @@
 package com.bignat.viktus.ui;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -11,9 +15,19 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
 import com.bignat.viktus.R;
+import com.bignat.viktus.data.AppDao;
+import com.bignat.viktus.data.AppDatabase;
 import com.bignat.viktus.data.ThemeManager;
+import com.bignat.viktus.model.HistoryEntry;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.SavedEntry;
 import com.bignat.viktus.ui.dialog.ConfirmDialog;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.Executors;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -80,6 +94,8 @@ public class SettingsActivity extends AppCompatActivity {
                     setResult(RESULT_OK);   // tells the Meals page to clear its lists
                     Toast.makeText(this, R.string.toast_data_cleared, Toast.LENGTH_SHORT).show();
                 });
+
+        findViewById(R.id.btn_clean_images).setOnClickListener(v -> cleanUnusedImages());
     }
 
     private void choose(int mode) {
@@ -98,5 +114,42 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("data_cleared", dataCleared);
+    }
+
+    private void cleanUnusedImages() {
+        Context app = getApplicationContext();
+        Handler main = new Handler(Looper.getMainLooper());
+
+        // Database and file work must not run on the main thread
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDao dao = AppDatabase.get(app).dao();
+
+            // File names still referenced somewhere
+            Set<String> used = new HashSet<>();
+            for (Meal m : dao.getMeals()) addFileName(used, m.imageUri);
+            for (HistoryEntry e : dao.getHistory()) addFileName(used, e.imageUri);
+            for (SavedEntry e : dao.getSaved()) addFileName(used, e.imageUri);
+
+            int deleted = 0;
+            File[] files = new File(app.getFilesDir(), "meal_images").listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    if (!used.contains(f.getName()) && f.delete()) deleted++;
+                }
+            }
+
+            int count = deleted;
+            main.post(() -> Toast.makeText(app,
+                    count == 0 ? app.getString(R.string.toast_no_unused_images)
+                            : app.getString(R.string.toast_images_cleaned, count),
+                    Toast.LENGTH_SHORT).show());
+        });
+    }
+
+    // "file:///.../meal_images/abc.jpg" -> "abc.jpg"
+    private static void addFileName(Set<String> set, String uri) {
+        if (uri == null) return;
+        String name = Uri.parse(uri).getLastPathSegment();
+        if (name != null) set.add(name);
     }
 }
