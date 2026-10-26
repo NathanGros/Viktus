@@ -12,16 +12,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignat.viktus.R;
+import com.bignat.viktus.logic.AvailableCalculator;
 import com.bignat.viktus.ui.adapter.SupplyAdapter;
 import com.bignat.viktus.data.AppViewModel;
 import com.bignat.viktus.model.Supply;
 import com.bignat.viktus.model.Unit;
 import com.bignat.viktus.ui.dialog.SupplyDialog;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SuppliesFragment extends Fragment {
     private SupplyAdapter adapter;
     private AppViewModel vm;
     private View emptyText;
+    private RecyclerView list;
+    private View fabAdd;
+    private ExtendedFloatingActionButton fabUsed;
+    private SupplyAdapter hiddenAdapter;
+    private final List<Supply> hiddenItems = new ArrayList<>();
+    private boolean hideUsed = false;
 
     public SuppliesFragment() {
         super(R.layout.fragment_supplies);
@@ -32,7 +43,7 @@ public class SuppliesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView list = view.findViewById(R.id.supplies_list);
+        list = view.findViewById(R.id.supplies_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
@@ -40,6 +51,16 @@ public class SuppliesFragment extends Fragment {
 
         adapter = new SupplyAdapter(vm.supplies, SupplyAdapter.Mode.NONE);
         list.setAdapter(adapter);
+
+        // Second adapter for the "hidden" view: a computed list with no click listener
+        hiddenAdapter = new SupplyAdapter(hiddenItems, SupplyAdapter.Mode.NONE);
+
+        fabAdd = view.findViewById(R.id.fab_add_supply);
+        fabUsed = view.findViewById(R.id.fab_used);
+        fabUsed.setOnClickListener(v -> {
+            hideUsed = !hideUsed;
+            applyMode();
+        });
 
         vm.loaded.observe(getViewLifecycleOwner(), ok -> {
             adapter.notifyDataSetChanged();
@@ -63,6 +84,11 @@ public class SuppliesFragment extends Fragment {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
                         // swipe disabled
+                    }
+
+                    @Override
+                    public boolean isLongPressDragEnabled() {
+                        return !hideUsed;
                     }
 
                     @Override
@@ -110,5 +136,31 @@ public class SuppliesFragment extends Fragment {
         // Wait for the database to be read, otherwise the text flashes at startup
         boolean loaded = Boolean.TRUE.equals(vm.loaded.getValue());
         emptyText.setVisibility(loaded && vm.supplies.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    private void applyMode() {
+        fabUsed.setText(hideUsed ? "Used: hidden" : "Used: shown");
+        fabAdd.setVisibility(hideUsed ? View.GONE : View.VISIBLE);
+
+        if (hideUsed) {
+            refreshHidden();
+            list.setAdapter(hiddenAdapter);
+        } else {
+            adapter.notifyDataSetChanged();
+            list.setAdapter(adapter);
+        }
+    }
+
+    private void refreshHidden() {
+        hiddenItems.clear();
+        hiddenItems.addAll(AvailableCalculator.compute(vm.supplies, vm.meals));
+        hiddenAdapter.notifyDataSetChanged();
+    }
+
+    // Planned meals may have changed while you were on another page
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (hiddenAdapter != null && hideUsed) refreshHidden();
     }
 }
