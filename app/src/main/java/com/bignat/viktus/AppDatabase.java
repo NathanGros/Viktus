@@ -2,16 +2,29 @@ package com.bignat.viktus;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Supply.class, Meal.class}, version = 1, exportSchema = false)
+@Database(entities = {Supply.class, Meal.class, HistoryEntry.class}, version = 2, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDao dao();
+
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS `history` ("
+                    + "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + "`position` INTEGER NOT NULL, "
+                    + "`name` TEXT, `description` TEXT, `imageUri` TEXT, `supplies` TEXT)");
+        }
+    };
 
     private static volatile AppDatabase instance;
 
@@ -21,7 +34,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "viktus.db")
-                            .fallbackToDestructiveMigration()   // dev only, see notes
+                            .addMigrations(MIGRATION_1_2)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

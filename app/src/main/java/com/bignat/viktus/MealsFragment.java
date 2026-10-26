@@ -81,6 +81,9 @@ public class MealsFragment extends Fragment {
                     String action = result.getString(MealDialog.KEY_ACTION);
 
                     if (MealDialog.ACTION_DELETE.equals(action) || MealDialog.ACTION_EATEN.equals(action)) {
+                        if (MealDialog.ACTION_EATEN.equals(action)) {
+                            vm.addToHistory(vm.meals.get(position));
+                        }
                         adapter.removeMeal(position);
                         vm.saveMeals();
                         refreshEmptyState();
@@ -104,6 +107,15 @@ public class MealsFragment extends Fragment {
         // Row tap: view mode
         adapter.setOnItemClickListener((meal, position) ->
                 MealDialog.newView(position, meal).show(getChildFragmentManager(), "meal_dialog"));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            refreshEmptyState();
+        }
     }
 
     private void refreshEmptyState() {

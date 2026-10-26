@@ -22,11 +22,20 @@ public abstract class AppDao {
     @Query("DELETE FROM meals")
     abstract void clearMeals();
 
+    @Query("SELECT * FROM history ORDER BY position")
+    public abstract List<HistoryEntry> getHistory();
+
+    @Query("DELETE FROM history")
+    abstract void clearHistory();
+
     @Insert
     abstract void insertSupplies(List<Supply> supplies);
 
     @Insert
     abstract void insertMeals(List<Meal> meals);
+
+    @Insert
+    abstract void insertHistory(List<HistoryEntry> entries);
 
     // Whole list is rewritten at once; fine for a personal app with a small amount of data
     @Transaction
@@ -39,5 +48,11 @@ public abstract class AppDao {
     public void replaceMeals(List<Meal> meals) {
         clearMeals();
         insertMeals(meals);
+    }
+
+    @Transaction
+    public void replaceHistory(List<HistoryEntry> entries) {
+        clearHistory();
+        insertHistory(entries);
     }
 }

@@ -14,10 +14,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AppViewModel extends AndroidViewModel {
+    public static final int HISTORY_LIMIT = 20;
 
     // The lists your adapters work on directly
     public final List<Supply> supplies = new ArrayList<>();
     public final List<Meal> meals = new ArrayList<>();
+    public final List<Meal> history = new ArrayList<>();
     public final MutableLiveData<Boolean> loaded = new MutableLiveData<>(false);
 
     private final AppDao dao;
@@ -31,9 +33,11 @@ public class AppViewModel extends AndroidViewModel {
         io.execute(() -> {
             List<Supply> s = dao.getSupplies();
             List<Meal> m = dao.getMeals();
+            List<HistoryEntry> h = dao.getHistory();
             new Handler(Looper.getMainLooper()).post(() -> {
                 supplies.addAll(s);
                 meals.addAll(m);
+                for (HistoryEntry e : h) history.add(e.toMeal());
                 loaded.setValue(true);
             });
         });
@@ -58,5 +62,22 @@ public class AppViewModel extends AndroidViewModel {
             snapshot.add(c);
         }
         io.execute(() -> dao.replaceMeals(snapshot));
+    }
+
+    // Newest goes on top; anything past the limit (the oldest) is dropped
+    public void addToHistory(Meal meal) {
+        history.add(0, meal.copy());
+        while (history.size() > HISTORY_LIMIT) {
+            history.remove(history.size() - 1);
+        }
+        saveHistory();
+    }
+
+    private void saveHistory() {
+        List<HistoryEntry> snapshot = new ArrayList<>();
+        for (int i = 0; i < history.size(); i++) {
+            snapshot.add(HistoryEntry.from(history.get(i).copy(), i));
+        }
+        io.execute(() -> dao.replaceHistory(snapshot));
     }
 }

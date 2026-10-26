@@ -46,6 +46,7 @@ public class MealDialog extends DialogFragment {
     public static final String ACTION_SAVE = "save";
     public static final String ACTION_DELETE = "delete";
     public static final String ACTION_EATEN = "eaten";
+    public static final String ACTION_PLAN = "plan";
 
     public static final int NEW_ITEM = -1;
 
@@ -55,7 +56,7 @@ public class MealDialog extends DialogFragment {
 
     private AppViewModel vm;
 
-    private enum DialogMode { ADD, EDIT, VIEW }
+    private enum DialogMode { ADD, EDIT, VIEW, HISTORY }
 
     public static MealDialog newAdd() {
         return create(DialogMode.ADD, NEW_ITEM, null);
@@ -67,6 +68,10 @@ public class MealDialog extends DialogFragment {
 
     public static MealDialog newView(int position, Meal meal) {
         return create(DialogMode.VIEW, position, meal);
+    }
+
+    public static MealDialog newHistory(Meal meal) {
+        return create(DialogMode.HISTORY, NEW_ITEM, meal);
     }
 
     private static MealDialog create(DialogMode mode, int position, @Nullable Meal meal) {
@@ -148,7 +153,7 @@ public class MealDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        boolean editable = mode != DialogMode.VIEW;
+        boolean editable = isEditable();
 
         TextView title = view.findViewById(R.id.dialog_title);
         TextInputLayout layoutName = view.findViewById(R.id.layout_name);
@@ -177,7 +182,8 @@ public class MealDialog extends DialogFragment {
         layoutDescription.setVisibility(editable ? View.VISIBLE : View.GONE);
         btnAddIngredient.setVisibility(editable ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.footer_edit).setVisibility(editable ? View.VISIBLE : View.GONE);
-        view.findViewById(R.id.footer_view).setVisibility(editable ? View.GONE : View.VISIBLE);
+        view.findViewById(R.id.footer_view).setVisibility(mode == DialogMode.VIEW ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.footer_history).setVisibility(mode == DialogMode.HISTORY ? View.VISIBLE : View.GONE);
         btnDelete.setVisibility(mode == DialogMode.EDIT ? View.VISIBLE : View.GONE);
         btnConfirm.setText(mode == DialogMode.EDIT ? "Done" : "Add");
 
@@ -305,6 +311,14 @@ public class MealDialog extends DialogFragment {
             dismiss();
             MealDialog.newEdit(position, original).show(fm, "meal_dialog");
         });
+
+        // History: put a copy of this meal back in the planned meals
+        view.findViewById(R.id.btn_add_meal).setOnClickListener(v ->
+                sendResult(ACTION_PLAN, original.copy()));
+    }
+
+    private boolean isEditable() {
+        return mode == DialogMode.ADD || mode == DialogMode.EDIT;
     }
 
     // Checkmark = enough in stock, cross = missing or not enough
@@ -326,7 +340,7 @@ public class MealDialog extends DialogFragment {
 
     private void refreshImage() {
         boolean hasImage = imageUri != null;
-        boolean editable = mode != DialogMode.VIEW;
+        boolean editable = isEditable();
 
         imageView.setImageURI(hasImage ? Uri.parse(imageUri) : null);
         // In View mode there is nothing to show without an image
