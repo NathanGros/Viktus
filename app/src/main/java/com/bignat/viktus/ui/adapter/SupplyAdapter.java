@@ -1,5 +1,6 @@
 package com.bignat.viktus.ui.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
         Supply s = supplies.get(position);
 
         holder.name.setText(s.name);
-        holder.quantity.setText(formatQuantity(s));
+        holder.quantity.setText(formatQuantity(holder.itemView.getContext(), s));
 
         holder.status.setVisibility(mode == Mode.STATUS ? View.VISIBLE : View.GONE);
         holder.checkBox.setVisibility(mode == Mode.CHECKBOX ? View.VISIBLE : View.GONE);
@@ -109,11 +110,11 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
         notifyItemMoved(from, to);
     }
 
-    private String formatQuantity(Supply s) {
+    private String formatQuantity(Context context, Supply s) {
         String number = (s.quantity == Math.floor(s.quantity))
                 ? String.valueOf((long) s.quantity)   // 2.0 -> "2"
                 : String.valueOf(s.quantity);         // 0.5 -> "0.5"
-        return number + " " + s.unit.label;
+        return number + " " + context.getString(s.unit.labelRes);
     }
 
     public void addSupply(Supply supply) {

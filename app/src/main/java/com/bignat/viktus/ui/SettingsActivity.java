@@ -1,12 +1,16 @@
 package com.bignat.viktus.ui;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import com.bignat.viktus.R;
 import com.bignat.viktus.data.ThemeManager;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,6 +32,30 @@ public class SettingsActivity extends AppCompatActivity {
         findViewById(R.id.option_light).setOnClickListener(v -> choose(ThemeManager.LIGHT));
         findViewById(R.id.option_dark).setOnClickListener(v -> choose(ThemeManager.DARK));
         findViewById(R.id.option_system).setOnClickListener(v -> choose(ThemeManager.SYSTEM));
+
+        // "" = follow the phone's language
+        final String[] tags = {"", "en", "fr"};
+        String[] names = {getString(R.string.language_system), "English", "Français"};
+
+        MaterialAutoCompleteTextView dropdown = findViewById(R.id.language_dropdown);
+        dropdown.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names));
+
+        // Show the current choice (false = don't filter the list)
+        LocaleListCompat current = AppCompatDelegate.getApplicationLocales();
+        int selected = 0;
+        if (!current.isEmpty()) {
+            for (int i = 1; i < tags.length; i++) {
+                if (tags[i].equals(current.get(0).getLanguage())) selected = i;
+            }
+        }
+        dropdown.setText(names[selected], false);
+
+        dropdown.setOnItemClickListener((parent, v, position, id) -> {
+            // Android saves the choice and recreates the screens in the new language
+            AppCompatDelegate.setApplicationLocales(tags[position].isEmpty()
+                    ? LocaleListCompat.getEmptyLocaleList()
+                    : LocaleListCompat.forLanguageTags(tags[position]));
+        });
     }
 
     private void choose(int mode) {

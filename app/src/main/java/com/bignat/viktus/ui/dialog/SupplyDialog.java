@@ -98,7 +98,7 @@ public class SupplyDialog extends DialogFragment {
         Unit[] units = Unit.values();
         String[] labels = new String[units.length];
         for (int i = 0; i < units.length; i++) {
-            labels[i] = units[i].label;
+            labels[i] = getString(units[i].labelRes);
         }
         spinnerUnit.setAdapter(new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item, labels));
@@ -131,7 +131,7 @@ public class SupplyDialog extends DialogFragment {
 
             double quantity;
             try {
-                quantity = Double.parseDouble(quantityText);
+                quantity = Double.parseDouble(quantityText.replace(',', '.'));
             } catch (NumberFormatException e) {
                 layoutQuantity.setError("Enter a number");
                 return;
