@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.dialog;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
@@ -26,6 +26,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bignat.viktus.R;
+import com.bignat.viktus.ui.adapter.SupplyAdapter;
+import com.bignat.viktus.data.AppViewModel;
+import com.bignat.viktus.logic.StockChecker;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;

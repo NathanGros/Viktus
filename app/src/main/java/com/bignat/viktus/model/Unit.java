@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.model;
 
 public enum Unit {
     PIECE("pcs", Dimension.COUNT, 1),

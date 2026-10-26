@@ -1,45 +1,44 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.bignat.viktus.R;
+import com.bignat.viktus.ui.adapter.SupplyAdapter;
+import com.bignat.viktus.data.AppViewModel;
+import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
+import com.bignat.viktus.ui.dialog.SupplyDialog;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class MealsFragment extends Fragment {
-
-    private MealAdapter adapter;
+public class SuppliesFragment extends Fragment {
+    private SupplyAdapter adapter;
     private AppViewModel vm;
     private View emptyText;
 
-    public MealsFragment() {
-        super(R.layout.fragment_meals);
+    public SuppliesFragment() {
+        super(R.layout.fragment_supplies);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView list = view.findViewById(R.id.meals_list);
+        RecyclerView list = view.findViewById(R.id.supplies_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         vm = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
-        emptyText = view.findViewById(R.id.meals_empty);
+        emptyText = view.findViewById(R.id.supplies_empty);
 
-        adapter = new MealAdapter(vm.meals);
+        adapter = new SupplyAdapter(vm.supplies, SupplyAdapter.Mode.NONE);
         list.setAdapter(adapter);
 
         vm.loaded.observe(getViewLifecycleOwner(), ok -> {
@@ -69,58 +68,47 @@ public class MealsFragment extends Fragment {
                     @Override
                     public void clearView(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh) {
                         super.clearView(rv, vh);
-                        vm.saveMeals();
+                        vm.saveSupplies();
                     }
                 });
         helper.attachToRecyclerView(list);
 
-        // Single listener for add, edit, delete and eaten
+        // Single listener for add, edit and delete
         getChildFragmentManager().setFragmentResultListener(
-                MealDialog.RESULT_KEY, getViewLifecycleOwner(), (key, result) -> {
-                    int position = result.getInt(MealDialog.KEY_POSITION);
-                    String action = result.getString(MealDialog.KEY_ACTION);
+                SupplyDialog.RESULT_KEY, getViewLifecycleOwner(), (key, result) -> {
+                    int position = result.getInt(SupplyDialog.KEY_POSITION);
 
-                    if (MealDialog.ACTION_DELETE.equals(action) || MealDialog.ACTION_EATEN.equals(action)) {
-                        if (MealDialog.ACTION_EATEN.equals(action)) {
-                            vm.addToHistory(vm.meals.get(position));
-                        }
-                        adapter.removeMeal(position);
-                        vm.saveMeals();
+                    if (result.getBoolean(SupplyDialog.KEY_DELETED)) {
+                        adapter.removeSupply(position);
+                        vm.saveSupplies();
                         refreshEmptyState();
                         return;
                     }
 
-                    Meal meal = (Meal) result.getSerializable(MealDialog.KEY_MEAL);
-                    if (position == MealDialog.NEW_ITEM) {
-                        adapter.addMeal(meal);
+                    String name = result.getString(SupplyDialog.KEY_NAME);
+                    double quantity = result.getDouble(SupplyDialog.KEY_QUANTITY);
+                    Unit unit = Unit.values()[result.getInt(SupplyDialog.KEY_UNIT)];
+
+                    if (position == SupplyDialog.NEW_ITEM) {
+                        adapter.addSupply(new Supply(name, quantity, unit, false));
                     } else {
-                        adapter.updateMeal(position, meal);
+                        adapter.updateSupply(position, name, quantity, unit);
                     }
-                    vm.saveMeals();
+                    vm.saveSupplies();
                     refreshEmptyState();
                 });
 
-        // "+" button: add mode
-        view.findViewById(R.id.fab_add_meal).setOnClickListener(v ->
-                MealDialog.newAdd().show(getChildFragmentManager(), "meal_dialog"));
+        view.findViewById(R.id.fab_add_supply).setOnClickListener(v ->
+                SupplyDialog.newAdd().show(getChildFragmentManager(), "supply_dialog"));
 
-        // Row tap: view mode
-        adapter.setOnItemClickListener((meal, position) ->
-                MealDialog.newView(position, meal).show(getChildFragmentManager(), "meal_dialog"));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-            refreshEmptyState();
-        }
+        adapter.setOnItemClickListener((supply, position) ->
+                SupplyDialog.newEdit(position, supply)
+                        .show(getChildFragmentManager(), "supply_dialog"));
     }
 
     private void refreshEmptyState() {
         // Wait for the database to be read, otherwise the text flashes at startup
         boolean loaded = Boolean.TRUE.equals(vm.loaded.getValue());
-        emptyText.setVisibility(loaded && vm.meals.isEmpty() ? View.VISIBLE : View.GONE);
+        emptyText.setVisibility(loaded && vm.supplies.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

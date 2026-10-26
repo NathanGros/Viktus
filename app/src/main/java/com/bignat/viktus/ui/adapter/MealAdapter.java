@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.adapter;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bignat.viktus.R;
+import com.bignat.viktus.model.Meal;
 import com.bumptech.glide.Glide;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.bignat.viktus.R;
 
 public class ConfirmDialog extends DialogFragment {
 

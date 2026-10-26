@@ -8,6 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bignat.viktus.ui.fragment.HistoryFragment;
+import com.bignat.viktus.ui.fragment.MealsFragment;
+import com.bignat.viktus.ui.fragment.SavesFragment;
+import com.bignat.viktus.ui.fragment.ShoppingFragment;
+import com.bignat.viktus.ui.fragment.SuppliesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

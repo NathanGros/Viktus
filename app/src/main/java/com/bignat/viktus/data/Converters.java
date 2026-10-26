@@ -1,6 +1,9 @@
-package com.bignat.viktus;
+package com.bignat.viktus.data;
 
 import androidx.room.TypeConverter;
+
+import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import org.json.JSONArray;
 import org.json.JSONException;

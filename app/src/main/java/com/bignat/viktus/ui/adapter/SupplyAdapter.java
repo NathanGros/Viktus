@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.adapter;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bignat.viktus.R;
+import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import java.util.List;
 

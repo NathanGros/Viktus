@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bignat.viktus.R;
+import com.bignat.viktus.ui.adapter.SupplyAdapter;
+import com.bignat.viktus.data.AppViewModel;
+import com.bignat.viktus.logic.ShoppingCalculator;
+import com.bignat.viktus.model.Supply;
 
 import java.util.ArrayList;
 import java.util.List;

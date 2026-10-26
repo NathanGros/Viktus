@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.data;
 
 import android.app.Application;
 import android.os.Handler;
@@ -7,6 +7,11 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+
+import com.bignat.viktus.model.HistoryEntry;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.SavedEntry;
+import com.bignat.viktus.model.Supply;
 
 import java.util.ArrayList;
 import java.util.List;

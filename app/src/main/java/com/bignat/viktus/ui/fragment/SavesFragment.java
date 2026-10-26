@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +11,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bignat.viktus.ui.adapter.MealAdapter;
+import com.bignat.viktus.R;
+import com.bignat.viktus.data.AppViewModel;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.ui.dialog.MealDialog;
 
 public class SavesFragment extends Fragment {
 

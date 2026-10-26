@@ -1,4 +1,6 @@
-package com.bignat.viktus;
+package com.bignat.viktus.logic;
+
+import com.bignat.viktus.model.Supply;
 
 import java.util.List;
 import java.util.Locale;

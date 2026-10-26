@@ -1,4 +1,8 @@
-package com.bignat.viktus;
+package com.bignat.viktus.logic;
+
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;

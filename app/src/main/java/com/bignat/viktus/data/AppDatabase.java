@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.data;
 
 import android.content.Context;
 
@@ -9,6 +9,11 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.bignat.viktus.model.HistoryEntry;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.SavedEntry;
+import com.bignat.viktus.model.Supply;
 
 @Database(entities = {Supply.class, Meal.class, HistoryEntry.class, SavedEntry.class},
         version = 3, exportSchema = false)

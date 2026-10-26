@@ -1,9 +1,14 @@
-package com.bignat.viktus;
+package com.bignat.viktus.data;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+
+import com.bignat.viktus.model.HistoryEntry;
+import com.bignat.viktus.model.Meal;
+import com.bignat.viktus.model.SavedEntry;
+import com.bignat.viktus.model.Supply;
 
 import java.util.List;
 

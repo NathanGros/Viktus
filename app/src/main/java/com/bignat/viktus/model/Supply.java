@@ -1,4 +1,4 @@
-package com.bignat.viktus;
+package com.bignat.viktus.model;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
