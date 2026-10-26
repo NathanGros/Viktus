@@ -189,8 +189,8 @@ public class MealDialog extends DialogFragment {
 
         // Title
         switch (mode) {
-            case ADD:  title.setText("Add meal"); break;
-            case EDIT: title.setText("Edit " + original.name); break;
+            case ADD:  title.setText(getString(R.string.add_meal)); break;
+            case EDIT: title.setText(getString(R.string.edit_title, original.name)); break;
             default:   title.setText(original.name); break;
         }
 
@@ -202,7 +202,7 @@ public class MealDialog extends DialogFragment {
         view.findViewById(R.id.footer_view).setVisibility(mode == DialogMode.VIEW ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.footer_history).setVisibility(mode == DialogMode.HISTORY || mode == DialogMode.SAVED ? View.VISIBLE : View.GONE);
         btnDelete.setVisibility(mode == DialogMode.EDIT ? View.VISIBLE : View.GONE);
-        btnConfirm.setText(mode == DialogMode.EDIT ? "Done" : "Add");
+        btnConfirm.setText(mode == DialogMode.EDIT ? getString(R.string.done) : getString(R.string.add));
 
         if (!editable) {
             boolean hasDescription = original.description != null && !original.description.isEmpty();
@@ -294,7 +294,7 @@ public class MealDialog extends DialogFragment {
             layoutName.setError(null);
 
             if (name.isEmpty()) {
-                layoutName.setError("Enter a name");
+                layoutName.setError(getString(R.string.error_name));
                 return;
             }
 
@@ -311,9 +311,9 @@ public class MealDialog extends DialogFragment {
                             mode == DialogMode.SAVED ? ACTION_UNSAVE : ACTION_DELETE, null));
 
             View.OnClickListener askDelete = v -> ConfirmDialog.newInstance(
-                            "Delete " + original.name + " ?",
-                            "Are you sure you want to delete " + original.name + " ?",
-                            "Delete")
+                            getString(R.string.delete_title, original.name),
+                            getString(R.string.delete_message, original.name),
+                            getString(R.string.delete))
                     .show(getChildFragmentManager(), "confirm_delete");
 
             btnDelete.setOnClickListener(askDelete);
@@ -335,7 +335,7 @@ public class MealDialog extends DialogFragment {
                 sendResult(ACTION_PLAN, original.copy()));
 
         MaterialButton btnHistorySave = view.findViewById(R.id.btn_history_save);
-        btnHistorySave.setText(mode == DialogMode.SAVED ? "Unsave" : "Save");
+        btnHistorySave.setText(mode == DialogMode.SAVED ? getString(R.string.unsave) : getString(R.string.save));
         if (mode == DialogMode.SAVED) {
             btnHistorySave.setTextColor(android.graphics.Color.parseColor("#C62828"));
         }
@@ -343,9 +343,9 @@ public class MealDialog extends DialogFragment {
         btnHistorySave.setOnClickListener(v -> {
             if (mode == DialogMode.SAVED) {
                 ConfirmDialog.newInstance(
-                                "Unsave " + original.name + " ?",
-                                "Are you sure you want to remove " + original.name + " from your saved meals?",
-                                "Unsave")
+                                getString(R.string.unsave_title, original.name),
+                                getString(R.string.unsave_message, original.name),
+                                getString(R.string.unsave))
                         .show(getChildFragmentManager(), "confirm_unsave");
             } else {
                 sendResult(ACTION_BOOKMARK, original);

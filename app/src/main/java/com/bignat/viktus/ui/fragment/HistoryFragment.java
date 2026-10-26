@@ -53,12 +53,12 @@ public class HistoryFragment extends Fragment {
                         vm.meals.add(meal);
                         vm.saveMeals();
                         android.widget.Toast.makeText(requireContext(),
-                                meal.name + " added to planned meals",
+                                getString(R.string.toast_planned, meal.name),
                                 android.widget.Toast.LENGTH_SHORT).show();
                     } else if (MealDialog.ACTION_BOOKMARK.equals(action)) {
                         boolean added = vm.addToSaved(meal);
                         android.widget.Toast.makeText(requireContext(),
-                                added ? meal.name + " saved" : meal.name + " is already saved",
+                                added ? getString(R.string.toast_saved, meal.name) : getString(R.string.toast_already_saved, meal.name),
                                 android.widget.Toast.LENGTH_SHORT).show();
                     }
                 });

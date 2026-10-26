@@ -15,11 +15,12 @@
     <string name="title_shopping">Shopping list</string>
     <string name="title_history">History</string>
     <string name="title_saves">Saved meals</string>
-    <string name="empty_meals">No planned meals yet</string>
-    <string name="empty_shopping">You have everything you need</string>
-    <string name="empty_history">No meals eaten yet</string>
-    <string name="empty_saves">No saved meals yet</string>
-    <string name="empty_ingredients">No ingredients yet</string>
+    <string name="empty_meals">Nothing planned </string>
+    <string name="empty_shopping">You have everything you need! </string>
+    <string name="empty_history">No meals eaten yet </string>
+    <string name="empty_saves">No saved meals yet </string>
+    <string name="empty_supplies">Uh oh… </string>
+    <string name="empty_ingredients">No ingredients yet </string>
 
     <!-- Buttons and labels -->
     <string name="cancel">Cancel</string>
@@ -35,9 +36,9 @@
     <string name="name">Name</string>
     <string name="quantity">Quantity</string>
     <string name="description">Description</string>
-    <string name="ingredients">Ingredients</string>
-    <string name="add_ingredient">Add ingredient</string>
-    <string name="add_to_planned">Add to planned meals</string>
+    <string name="supplies">Ingredients</string>
+    <string name="add_supply">Add supply</string>
+    <string name="add_to_planned">Add meal</string>
     <string name="tap_to_add_image">Tap to add an image</string>
     <string name="remove_image">Remove image</string>
     <string name="used_shown">Used: shown</string>
@@ -45,7 +46,6 @@
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>
-    <string name="add_supply">Add supply</string>
     <string name="edit_title">Edit %1$s</string>
     <string name="delete_title">Delete %1$s?</string>
     <string name="delete_message">Are you sure you want to delete %1$s?</string>

@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_meals"
         android:icon="@drawable/ic_meal"
-        android:title="Meals" />
+        android:title="@string/nav_meals" />
     <item android:id="@+id/nav_supplies"
         android:icon="@drawable/ic_supply"
-        android:title="Supplies" />
+        android:title="@string/nav_supplies" />
     <item android:id="@+id/nav_shopping"
         android:icon="@drawable/ic_shopping_cart"
-        android:title="Shopping" />
+        android:title="@string/nav_shopping" />
     <item android:id="@+id/nav_history"
         android:icon="@drawable/ic_history"
-        android:title="History" />
+        android:title="@string/nav_history" />
     <item android:id="@+id/nav_saves"
         android:icon="@drawable/ic_bookmark"
-        android:title="Saves" />
+        android:title="@string/nav_saves" />
 </menu>

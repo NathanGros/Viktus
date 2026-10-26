@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nav_meals">Repas</string>
-    <string name="nav_supplies">Stock</string>
+    <string name="nav_supplies">Ingrédients</string>
     <string name="nav_shopping">Courses</string>
     <string name="nav_history">Historique</string>
     <string name="nav_saves">Favoris</string>
 
     <string name="title_meals">Repas prévus</string>
-    <string name="title_supplies">Stock</string>
+    <string name="title_supplies">Ingrédients</string>
     <string name="title_shopping">Liste de courses</string>
     <string name="title_history">Historique</string>
     <string name="title_saves">Repas enregistrés</string>
-    <string name="empty_meals">Aucun repas prévu</string>
-    <string name="empty_shopping">Vous avez tout ce qu\'il faut</string>
-    <string name="empty_history">Aucun repas mangé</string>
-    <string name="empty_saves">Aucun repas enregistré</string>
-    <string name="empty_ingredients">Aucun ingrédient</string>
+    <string name="empty_meals">Aucun repas prévu </string>
+    <string name="empty_shopping">Vous avez tout ce qu\'il faut! </string>
+    <string name="empty_history">Aucun repas mangé </string>
+    <string name="empty_saves">Aucun repas enregistré </string>
+    <string name="empty_supplies">Aucun ingrédient </string>
+    <string name="empty_ingredients">Aucun ingrédient </string>
 
     <string name="cancel">Annuler</string>
     <string name="add">Ajouter</string>
@@ -30,16 +31,15 @@
     <string name="name">Nom</string>
     <string name="quantity">Quantité</string>
     <string name="description">Description</string>
-    <string name="ingredients">Ingrédients</string>
-    <string name="add_ingredient">Ajouter un ingrédient</string>
-    <string name="add_to_planned">Ajouter aux repas prévus</string>
+    <string name="supplies">Ingrédients</string>
+    <string name="add_supply">Ajouter un ingrédient</string>
+    <string name="add_to_planned">Ajouter ce repas</string>
     <string name="tap_to_add_image">Touchez pour ajouter une image</string>
     <string name="remove_image">Retirer l\'image</string>
     <string name="used_shown">Utilisés : affichés</string>
     <string name="used_hidden">Utilisés : masqués</string>
 
     <string name="add_meal">Ajouter un repas</string>
-    <string name="add_supply">Ajouter un produit</string>
     <string name="edit_title">Modifier %1$s</string>
     <string name="delete_title">Supprimer %1$s ?</string>
     <string name="delete_message">Voulez-vous vraiment supprimer %1$s ?</string>

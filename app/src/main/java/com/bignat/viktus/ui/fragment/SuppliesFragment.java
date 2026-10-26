@@ -143,7 +143,7 @@ public class SuppliesFragment extends Fragment {
     }
 
     private void applyMode() {
-        fabUsed.setText(hideUsed ? "Used: hidden" : "Used: shown");
+        fabUsed.setText(hideUsed ? getString(R.string.used_hidden) : getString(R.string.used_shown));
         fabAdd.setVisibility(hideUsed ? View.GONE : View.VISIBLE);
 
         if (hideUsed) {

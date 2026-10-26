@@ -90,8 +90,8 @@ public class SupplyDialog extends DialogFragment {
         Spinner spinnerUnit = view.findViewById(R.id.spinner_unit);
 
         // Mode-specific bits
-        title.setText(isEdit ? "Edit " + originalName : "Add supply");
-        btnConfirm.setText(isEdit ? "Done" : "Add");
+        title.setText(isEdit ? getString(R.string.edit_title, originalName) : getString(R.string.add_supply));
+        btnConfirm.setText(isEdit ? getString(R.string.done) : getString(R.string.add));
         btnDelete.setVisibility(isEdit ? View.VISIBLE : View.GONE);
 
         // Unit spinner
@@ -125,7 +125,7 @@ public class SupplyDialog extends DialogFragment {
             layoutQuantity.setError(null);
 
             if (name.isEmpty()) {
-                layoutName.setError("Enter a name");
+                layoutName.setError(getString(R.string.error_name));
                 return;
             }
 
@@ -133,11 +133,11 @@ public class SupplyDialog extends DialogFragment {
             try {
                 quantity = Double.parseDouble(quantityText.replace(',', '.'));
             } catch (NumberFormatException e) {
-                layoutQuantity.setError("Enter a number");
+                layoutQuantity.setError(getString(R.string.error_number));
                 return;
             }
             if (quantity <= 0) {
-                layoutQuantity.setError("Must be greater than 0");
+                layoutQuantity.setError(getString(R.string.error_positive));
                 return;
             }
 
@@ -163,9 +163,9 @@ public class SupplyDialog extends DialogFragment {
 
         btnDelete.setOnClickListener(v ->
                 ConfirmDialog.newInstance(
-                                "Delete " + originalName + " ?",
-                                "Are you sure you want to delete " + originalName + " ?",
-                                "Delete")
+                                getString(R.string.delete_title, originalName),
+                                getString(R.string.delete_message, originalName),
+                                getString(R.string.delete))
                         .show(getChildFragmentManager(), "confirm_delete"));
     }
 

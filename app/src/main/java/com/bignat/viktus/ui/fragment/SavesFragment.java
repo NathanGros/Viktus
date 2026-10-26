@@ -79,7 +79,7 @@ public class SavesFragment extends Fragment {
                         vm.meals.add(meal);
                         vm.saveMeals();
                         Toast.makeText(requireContext(),
-                                meal.name + " added to planned meals",
+                                getString(R.string.toast_planned, meal.name),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
