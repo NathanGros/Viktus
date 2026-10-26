@@ -3,18 +3,22 @@ package com.bignat.viktus.ui;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
 import com.bignat.viktus.R;
 import com.bignat.viktus.data.ThemeManager;
+import com.bignat.viktus.ui.dialog.ConfirmDialog;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView swatchLight, swatchDark, swatchSystem;
+    private boolean dataCleared = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,26 @@ public class SettingsActivity extends AppCompatActivity {
                     ? LocaleListCompat.getEmptyLocaleList()
                     : LocaleListCompat.forLanguageTags(tags[position]));
         });
+
+        // A theme or language change recreates this screen, so remember that data was cleared
+        if (savedInstanceState != null) {
+            dataCleared = savedInstanceState.getBoolean("data_cleared");
+            if (dataCleared) setResult(RESULT_OK);
+        }
+
+        findViewById(R.id.btn_clear_data).setOnClickListener(v ->
+                ConfirmDialog.newInstance(
+                                getString(R.string.clear_data_title),
+                                getString(R.string.clear_data_message),
+                                getString(R.string.clear_data_confirm))
+                        .show(getSupportFragmentManager(), "confirm_clear"));
+
+        getSupportFragmentManager().setFragmentResultListener(
+                ConfirmDialog.RESULT_KEY, this, (key, result) -> {
+                    dataCleared = true;
+                    setResult(RESULT_OK);   // tells the Meals page to clear its lists
+                    Toast.makeText(this, R.string.toast_data_cleared, Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void choose(int mode) {
@@ -68,5 +92,11 @@ public class SettingsActivity extends AppCompatActivity {
         swatchLight.setSelected(mode == ThemeManager.LIGHT);
         swatchDark.setSelected(mode == ThemeManager.DARK);
         swatchSystem.setSelected(mode == ThemeManager.SYSTEM);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("data_cleared", dataCleared);
     }
 }

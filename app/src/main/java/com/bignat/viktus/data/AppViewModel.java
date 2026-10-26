@@ -13,6 +13,7 @@ import com.bignat.viktus.model.Meal;
 import com.bignat.viktus.model.SavedEntry;
 import com.bignat.viktus.model.Supply;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -105,5 +106,25 @@ public class AppViewModel extends AndroidViewModel {
             snapshot.add(SavedEntry.from(saved.get(i).copy(), i));
         }
         io.execute(() -> dao.replaceSaved(snapshot));
+    }
+
+    // Empties the lists, the database and the saved photos
+    public void clearAll() {
+        supplies.clear();
+        meals.clear();
+        history.clear();
+        saved.clear();
+
+        io.execute(() -> {
+            dao.replaceSupplies(new ArrayList<>());
+            dao.replaceMeals(new ArrayList<>());
+            dao.replaceHistory(new ArrayList<>());
+            dao.replaceSaved(new ArrayList<>());
+
+            File[] images = new File(getApplication().getFilesDir(), "meal_images").listFiles();
+            if (images != null) {
+                for (File f : images) f.delete();
+            }
+        });
     }
 }

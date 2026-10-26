@@ -78,4 +78,12 @@
     <string name="unit_tablespoon">tbsp</string>
     <string name="unit_teaspoon">tsp</string>
     <string name="unit_cup">cup</string>
+
+    <!-- Data -->
+    <string name="section_data">Data</string>
+    <string name="clear_data">Clear all data</string>
+    <string name="clear_data_title">Clear all data?</string>
+    <string name="clear_data_message">This permanently deletes all meals, supplies, history, saved meals and photos. This cannot be undone.</string>
+    <string name="clear_data_confirm">Clear</string>
+    <string name="toast_data_cleared">All data cleared</string>
 </resources>

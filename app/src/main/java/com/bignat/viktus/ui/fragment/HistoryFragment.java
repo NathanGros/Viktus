@@ -62,10 +62,6 @@ public class HistoryFragment extends Fragment {
                                 android.widget.Toast.LENGTH_SHORT).show();
                     }
                 });
-
-        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
-                startActivity(new android.content.Intent(requireContext(),
-                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     // Runs each time you swipe to this page, so new Eaten meals show up

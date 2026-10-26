@@ -1,13 +1,21 @@
 package com.bignat.viktus;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bignat.viktus.data.AppViewModel;
+import com.bignat.viktus.ui.SettingsActivity;
 import com.bignat.viktus.ui.fragment.HistoryFragment;
 import com.bignat.viktus.ui.fragment.MealsFragment;
 import com.bignat.viktus.ui.fragment.SavesFragment;
@@ -21,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
     private static final int[] TAB_IDS = {
             R.id.nav_meals, R.id.nav_supplies, R.id.nav_shopping, R.id.nav_history, R.id.nav_saves
     };
+    private static final int[] TITLES = {
+            R.string.title_meals, R.string.title_supplies, R.string.title_shopping,
+            R.string.title_history, R.string.title_saves
+    };
+
+    private final ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    AppViewModel vm = new ViewModelProvider(this).get(AppViewModel.class);
+                    vm.clearAll();
+                    vm.loaded.setValue(true);   // every page redraws
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager2 pager = findViewById(R.id.pager);
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
+
+        TextView title = findViewById(R.id.page_title);
+        title.setText(TITLES[pager.getCurrentItem()]);
+
+        findViewById(R.id.btn_settings).setOnClickListener(v ->
+                settingsLauncher.launch(new Intent(this, SettingsActivity.class)));
 
         pager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
@@ -67,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                nav.getMenu().getItem(position).setChecked(true);
+                title.setText(TITLES[position]);
             }
         });
     }

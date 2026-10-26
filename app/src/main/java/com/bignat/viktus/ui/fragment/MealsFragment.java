@@ -1,8 +1,12 @@
 package com.bignat.viktus.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -11,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bignat.viktus.ui.SettingsActivity;
 import com.bignat.viktus.ui.adapter.MealAdapter;
 import com.bignat.viktus.R;
 import com.bignat.viktus.data.AppViewModel;
@@ -105,10 +110,6 @@ public class MealsFragment extends Fragment {
         // Row tap: view mode
         adapter.setOnItemClickListener((meal, position) ->
                 MealDialog.newView(position, meal).show(getChildFragmentManager(), "meal_dialog"));
-
-        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
-                startActivity(new android.content.Intent(requireContext(),
-                        com.bignat.viktus.ui.SettingsActivity.class)));
     }
 
     @Override

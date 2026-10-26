@@ -69,4 +69,11 @@
     <string name="unit_tablespoon">c. à s.</string>
     <string name="unit_teaspoon">c. à c.</string>
     <string name="unit_cup">tasse</string>
+
+    <string name="section_data">Données</string>
+    <string name="clear_data">Effacer toutes les données</string>
+    <string name="clear_data_title">Effacer toutes les données ?</string>
+    <string name="clear_data_message">Cela supprime définitivement tous les repas, produits, l\'historique, les repas enregistrés et les photos. Cette action est irréversible.</string>
+    <string name="clear_data_confirm">Effacer</string>
+    <string name="toast_data_cleared">Données effacées</string>
 </resources>
