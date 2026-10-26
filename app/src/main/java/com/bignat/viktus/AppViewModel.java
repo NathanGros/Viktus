@@ -20,6 +20,7 @@ public class AppViewModel extends AndroidViewModel {
     public final List<Supply> supplies = new ArrayList<>();
     public final List<Meal> meals = new ArrayList<>();
     public final List<Meal> history = new ArrayList<>();
+    public final List<Meal> saved = new ArrayList<>();
     public final MutableLiveData<Boolean> loaded = new MutableLiveData<>(false);
 
     private final AppDao dao;
@@ -34,10 +35,12 @@ public class AppViewModel extends AndroidViewModel {
             List<Supply> s = dao.getSupplies();
             List<Meal> m = dao.getMeals();
             List<HistoryEntry> h = dao.getHistory();
+            List<SavedEntry> sv = dao.getSaved();
             new Handler(Looper.getMainLooper()).post(() -> {
                 supplies.addAll(s);
                 meals.addAll(m);
                 for (HistoryEntry e : h) history.add(e.toMeal());
+                for (SavedEntry e : sv) saved.add(e.toMeal());
                 loaded.setValue(true);
             });
         });
@@ -79,5 +82,23 @@ public class AppViewModel extends AndroidViewModel {
             snapshot.add(HistoryEntry.from(history.get(i).copy(), i));
         }
         io.execute(() -> dao.replaceHistory(snapshot));
+    }
+
+    // Returns false if a saved meal with the same name already exists
+    public boolean addToSaved(Meal meal) {
+        for (Meal m : saved) {
+            if (m.name.trim().equalsIgnoreCase(meal.name.trim())) return false;
+        }
+        saved.add(meal.copy());
+        saveSaved();
+        return true;
+    }
+
+    public void saveSaved() {
+        List<SavedEntry> snapshot = new ArrayList<>();
+        for (int i = 0; i < saved.size(); i++) {
+            snapshot.add(SavedEntry.from(saved.get(i).copy(), i));
+        }
+        io.execute(() -> dao.replaceSaved(snapshot));
     }
 }

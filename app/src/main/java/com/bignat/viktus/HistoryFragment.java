@@ -40,12 +40,19 @@ public class HistoryFragment extends Fragment {
 
         getChildFragmentManager().setFragmentResultListener(
                 MealDialog.RESULT_KEY, getViewLifecycleOwner(), (key, result) -> {
-                    if (MealDialog.ACTION_PLAN.equals(result.getString(MealDialog.KEY_ACTION))) {
-                        Meal meal = (Meal) result.getSerializable(MealDialog.KEY_MEAL);
+                    String action = result.getString(MealDialog.KEY_ACTION);
+                    Meal meal = (Meal) result.getSerializable(MealDialog.KEY_MEAL);
+
+                    if (MealDialog.ACTION_PLAN.equals(action)) {
                         vm.meals.add(meal);
                         vm.saveMeals();
                         android.widget.Toast.makeText(requireContext(),
                                 meal.name + " added to planned meals",
+                                android.widget.Toast.LENGTH_SHORT).show();
+                    } else if (MealDialog.ACTION_BOOKMARK.equals(action)) {
+                        boolean added = vm.addToSaved(meal);
+                        android.widget.Toast.makeText(requireContext(),
+                                added ? meal.name + " saved" : meal.name + " is already saved",
                                 android.widget.Toast.LENGTH_SHORT).show();
                     }
                 });

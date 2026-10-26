@@ -51,6 +51,8 @@ public class MealDialog extends DialogFragment {
     public static final String ACTION_DELETE = "delete";
     public static final String ACTION_EATEN = "eaten";
     public static final String ACTION_PLAN = "plan";
+    public static final String ACTION_BOOKMARK = "bookmark";
+    public static final String ACTION_UNSAVE = "unsave";
 
     public static final int NEW_ITEM = -1;
 
@@ -60,7 +62,7 @@ public class MealDialog extends DialogFragment {
 
     private AppViewModel vm;
 
-    private enum DialogMode { ADD, EDIT, VIEW, HISTORY }
+    private enum DialogMode { ADD, EDIT, VIEW, HISTORY, SAVED }
 
     public static MealDialog newAdd() {
         return create(DialogMode.ADD, NEW_ITEM, null);
@@ -76,6 +78,10 @@ public class MealDialog extends DialogFragment {
 
     public static MealDialog newHistory(Meal meal) {
         return create(DialogMode.HISTORY, NEW_ITEM, meal);
+    }
+
+    public static MealDialog newSaved(int position, Meal meal) {
+        return create(DialogMode.SAVED, position, meal);
     }
 
     private static MealDialog create(DialogMode mode, int position, @Nullable Meal meal) {
@@ -187,7 +193,7 @@ public class MealDialog extends DialogFragment {
         btnAddIngredient.setVisibility(editable ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.footer_edit).setVisibility(editable ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.footer_view).setVisibility(mode == DialogMode.VIEW ? View.VISIBLE : View.GONE);
-        view.findViewById(R.id.footer_history).setVisibility(mode == DialogMode.HISTORY ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.footer_history).setVisibility(mode == DialogMode.HISTORY || mode == DialogMode.SAVED ? View.VISIBLE : View.GONE);
         btnDelete.setVisibility(mode == DialogMode.EDIT ? View.VISIBLE : View.GONE);
         btnConfirm.setText(mode == DialogMode.EDIT ? "Done" : "Add");
 
@@ -294,7 +300,8 @@ public class MealDialog extends DialogFragment {
         if (original != null) {
             getChildFragmentManager().setFragmentResultListener(
                     ConfirmDialog.RESULT_KEY, getViewLifecycleOwner(),
-                    (key, result) -> sendResult(ACTION_DELETE, null));
+                    (key, result) -> sendResult(
+                            mode == DialogMode.SAVED ? ACTION_UNSAVE : ACTION_DELETE, null));
 
             View.OnClickListener askDelete = v -> ConfirmDialog.newInstance(
                             "Delete " + original.name + " ?",
@@ -319,6 +326,24 @@ public class MealDialog extends DialogFragment {
         // History: put a copy of this meal back in the planned meals
         view.findViewById(R.id.btn_add_meal).setOnClickListener(v ->
                 sendResult(ACTION_PLAN, original.copy()));
+
+        MaterialButton btnHistorySave = view.findViewById(R.id.btn_history_save);
+        btnHistorySave.setText(mode == DialogMode.SAVED ? "Unsave" : "Save");
+        if (mode == DialogMode.SAVED) {
+            btnHistorySave.setTextColor(android.graphics.Color.parseColor("#C62828"));
+        }
+
+        btnHistorySave.setOnClickListener(v -> {
+            if (mode == DialogMode.SAVED) {
+                ConfirmDialog.newInstance(
+                                "Unsave " + original.name + " ?",
+                                "Are you sure you want to remove " + original.name + " from your saved meals?",
+                                "Unsave")
+                        .show(getChildFragmentManager(), "confirm_unsave");
+            } else {
+                sendResult(ACTION_BOOKMARK, original);
+            }
+        });
     }
 
     private boolean isEditable() {

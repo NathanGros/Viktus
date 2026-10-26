@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Same order as the items in bottom_nav_menu.xml
     private static final int[] TAB_IDS = {
-            R.id.nav_meals, R.id.nav_supplies, R.id.nav_shopping, R.id.nav_history
+            R.id.nav_meals, R.id.nav_supplies, R.id.nav_shopping, R.id.nav_history, R.id.nav_saves
     };
 
     @Override
@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
                     case 0:  return new MealsFragment();
                     case 1:  return new SuppliesFragment();
                     case 2:  return new ShoppingFragment();
-                    default: return new HistoryFragment();
+                    case 3:  return new HistoryFragment();
+                    default: return new SavesFragment();
                 }
             }
 

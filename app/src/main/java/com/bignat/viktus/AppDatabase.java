@@ -10,7 +10,8 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Supply.class, Meal.class, HistoryEntry.class}, version = 2, exportSchema = false)
+@Database(entities = {Supply.class, Meal.class, HistoryEntry.class, SavedEntry.class},
+        version = 3, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -26,6 +27,16 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS `saved` ("
+                    + "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + "`position` INTEGER NOT NULL, "
+                    + "`name` TEXT, `description` TEXT, `imageUri` TEXT, `supplies` TEXT)");
+        }
+    };
+
     private static volatile AppDatabase instance;
 
     public static AppDatabase get(Context context) {
@@ -34,7 +45,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "viktus.db")
-                            .addMigrations(MIGRATION_1_2)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
