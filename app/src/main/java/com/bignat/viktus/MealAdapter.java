@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
@@ -58,10 +60,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ViewHolder> {
 
         if (meal.imageUri != null) {
             holder.imageCard.setVisibility(View.VISIBLE);
-            holder.image.setImageURI(Uri.parse(meal.imageUri));
+            Glide.with(holder.itemView)
+                    .load(Uri.parse(meal.imageUri))
+                    .centerCrop()
+                    .into(holder.image);
         } else {
             holder.imageCard.setVisibility(View.GONE);
-            holder.image.setImageDrawable(null);   // rows are recycled, clear the old picture
+            Glide.with(holder.itemView).clear(holder.image);   // rows are recycled
         }
         holder.itemView.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();

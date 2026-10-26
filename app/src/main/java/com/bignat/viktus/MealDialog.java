@@ -1,7 +1,10 @@
 package com.bignat.viktus;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -342,7 +346,11 @@ public class MealDialog extends DialogFragment {
         boolean hasImage = imageUri != null;
         boolean editable = isEditable();
 
-        imageView.setImageURI(hasImage ? Uri.parse(imageUri) : null);
+        if (hasImage) {
+            Glide.with(this).load(Uri.parse(imageUri)).centerCrop().into(imageView);
+        } else {
+            Glide.with(this).clear(imageView);
+        }
         // In View mode there is nothing to show without an image
         imageCard.setVisibility(editable || hasImage ? View.VISIBLE : View.GONE);
         btnRemoveImage.setVisibility(editable && hasImage ? View.VISIBLE : View.GONE);
@@ -352,20 +360,35 @@ public class MealDialog extends DialogFragment {
         emptyIngredients.setVisibility(ingredients.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
-    // The picker only gives temporary access to the photo, so keep our own copy
     @Nullable
     private String copyToAppStorage(Uri source) {
         File dir = new File(requireContext().getFilesDir(), "meal_images");
         if (!dir.exists() && !dir.mkdirs()) return null;
-
         File target = new File(dir, UUID.randomUUID() + ".jpg");
-        try (InputStream in = requireContext().getContentResolver().openInputStream(source);
-             OutputStream out = new FileOutputStream(target)) {
-            if (in == null) return null;
-            byte[] buffer = new byte[8192];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
+
+        try {
+            if (Build.VERSION.SDK_INT >= 28) {
+                // Also applies the photo's rotation correctly
+                Bitmap bitmap = ImageDecoder.decodeBitmap(
+                        ImageDecoder.createSource(requireContext().getContentResolver(), source),
+                        (decoder, info, src) -> {
+                            int w = info.getSize().getWidth();
+                            int h = info.getSize().getHeight();
+                            float scale = Math.min(1f, 1280f / Math.max(w, h));
+                            decoder.setTargetSize(Math.round(w * scale), Math.round(h * scale));
+                        });
+                try (OutputStream out = new FileOutputStream(target)) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, out);
+                }
+            } else {
+                // Older phones: plain copy
+                try (InputStream in = requireContext().getContentResolver().openInputStream(source);
+                     OutputStream out = new FileOutputStream(target)) {
+                    if (in == null) return null;
+                    byte[] buffer = new byte[8192];
+                    int read;
+                    while ((read = in.read(buffer)) != -1) out.write(buffer, 0, read);
+                }
             }
             return Uri.fromFile(target).toString();
         } catch (IOException e) {
