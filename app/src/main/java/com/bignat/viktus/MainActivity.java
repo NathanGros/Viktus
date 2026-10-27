@@ -3,6 +3,8 @@ package com.bignat.viktus;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -53,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager2 pager = findViewById(R.id.pager);
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
+
+        Menu menu = nav.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            View item = nav.findViewById(menu.getItem(i).getItemId());
+            if (item != null) {
+                TooltipCompat.setTooltipText(item, null);
+                item.setOnLongClickListener(v -> true);   // swallow the long press
+            }
+        }
 
         TextView title = findViewById(R.id.page_title);
         title.setText(TITLES[pager.getCurrentItem()]);

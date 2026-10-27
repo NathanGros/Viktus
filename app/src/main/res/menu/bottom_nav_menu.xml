@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_meals"
-        android:icon="@drawable/ic_meal"
+        android:icon="@drawable/ic_meals"
         android:title="@string/nav_meals" />
     <item android:id="@+id/nav_supplies"
-        android:icon="@drawable/ic_supply"
+        android:icon="@drawable/ic_supplies"
         android:title="@string/nav_supplies" />
     <item android:id="@+id/nav_shopping"
-        android:icon="@drawable/ic_shopping_cart"
+        android:icon="@drawable/ic_shopping"
         android:title="@string/nav_shopping" />
     <item android:id="@+id/nav_history"
         android:icon="@drawable/ic_history"
         android:title="@string/nav_history" />
     <item android:id="@+id/nav_saves"
-        android:icon="@drawable/ic_bookmark"
+        android:icon="@drawable/ic_saves"
         android:title="@string/nav_saves" />
 </menu>
