@@ -69,6 +69,7 @@
     <string name="unit_tablespoon">c. à s.</string>
     <string name="unit_teaspoon">c. à c.</string>
     <string name="unit_cup">tasse</string>
+    <string name="unit_unspecified">non précisé</string>
 
     <string name="section_data">Données</string>
     <string name="clear_data">Effacer toutes les données</string>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -102,6 +103,16 @@ public class SupplyDialog extends DialogFragment {
         }
         spinnerUnit.setAdapter(new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item, labels));
+        // No quantity field when the unit is "unspecified"
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+                layoutQuantity.setVisibility(units[pos] == Unit.UNSPECIFIED ? View.GONE : View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
 
         // Pre-fill in edit mode (only on first creation, so rotation keeps the user's edits)
         if (isEdit && savedInstanceState == null) {
@@ -129,16 +140,21 @@ public class SupplyDialog extends DialogFragment {
                 return;
             }
 
-            double quantity;
-            try {
-                quantity = Double.parseDouble(quantityText.replace(',', '.'));
-            } catch (NumberFormatException e) {
-                layoutQuantity.setError(getString(R.string.error_number));
-                return;
-            }
-            if (quantity <= 0) {
-                layoutQuantity.setError(getString(R.string.error_positive));
-                return;
+            boolean unspecified =
+                    units[spinnerUnit.getSelectedItemPosition()] == Unit.UNSPECIFIED;
+
+            double quantity = 1;   // placeholder for unspecified supplies
+            if (!unspecified) {
+                try {
+                    quantity = Double.parseDouble(quantityText.replace(',', '.'));
+                } catch (NumberFormatException e) {
+                    layoutQuantity.setError(getString(R.string.error_number));
+                    return;
+                }
+                if (quantity <= 0) {
+                    layoutQuantity.setError(getString(R.string.error_positive));
+                    return;
+                }
             }
 
             Bundle result = new Bundle();

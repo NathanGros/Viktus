@@ -2,6 +2,7 @@ package com.bignat.viktus.logic;
 
 import com.bignat.viktus.model.Meal;
 import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class AvailableCalculator {
         Map<String, Double> remainingNeed = new HashMap<>();
         for (Meal meal : meals) {
             for (Supply ing : meal.supplies) {
+                if (ing.unit == Unit.UNSPECIFIED) continue;
                 String k = key(ing);
                 Double current = remainingNeed.get(k);
                 remainingNeed.put(k, (current == null ? 0 : current) + ing.quantity * ing.unit.factor);

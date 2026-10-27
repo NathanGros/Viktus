@@ -6,10 +6,12 @@ import com.bignat.viktus.model.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class ShoppingCalculator {
 
@@ -26,10 +28,16 @@ public class ShoppingCalculator {
 
     // Everything the meals need, minus what the stock holds
     public static List<Supply> compute(List<Meal> meals, List<Supply> stock) {
-        // 1. Total needed per ingredient, summed across all meals
+        // 1. Needs per ingredient; unspecified ones are tracked separately by name
         Map<String, Need> needs = new LinkedHashMap<>();
+        Map<String, String> unspecifiedNeeds = new LinkedHashMap<>();   // lowercase -> display name
         for (Meal meal : meals) {
             for (Supply ing : meal.supplies) {
+                if (ing.unit == Unit.UNSPECIFIED) {
+                    String n = ing.name.trim().toLowerCase(Locale.ROOT);
+                    if (!unspecifiedNeeds.containsKey(n)) unspecifiedNeeds.put(n, ing.name.trim());
+                    continue;
+                }
                 String key = key(ing);
                 Need need = needs.get(key);
                 if (need == null) {
@@ -40,21 +48,41 @@ public class ShoppingCalculator {
             }
         }
 
-        // 2. Total in stock per ingredient
+        // 2. Stock: totals per ingredient, plus which names we own at all
         Map<String, Double> stocked = new HashMap<>();
+        Set<String> ownedNames = new HashSet<>();
+        Set<String> unspecifiedStock = new HashSet<>();
         for (Supply s : stock) {
+            String n = s.name.trim().toLowerCase(Locale.ROOT);
+            ownedNames.add(n);
+            if (s.unit == Unit.UNSPECIFIED) {
+                unspecifiedStock.add(n);
+                continue;
+            }
             String key = key(s);
             Double current = stocked.get(key);
             stocked.put(key, (current == null ? 0 : current) + s.quantity * s.unit.factor);
         }
 
-        // 3. Keep only what is missing
+        // 3. What is missing
         List<Supply> result = new ArrayList<>();
+        Set<String> listed = new HashSet<>();
         for (Map.Entry<String, Need> e : needs.entrySet()) {
+            String n = e.getValue().name.toLowerCase(Locale.ROOT);
+            if (unspecifiedStock.contains(n)) continue;   // we own some, amount unknown
+
             Double have = stocked.get(e.getKey());
             double missing = e.getValue().base - (have == null ? 0 : have);
             if (missing > 1e-9) {
                 result.add(toSupply(e.getValue(), missing));
+                listed.add(n);
+            }
+        }
+
+        // Unspecified needs: listed only if we own none of it
+        for (Map.Entry<String, String> e : unspecifiedNeeds.entrySet()) {
+            if (!ownedNames.contains(e.getKey()) && !listed.contains(e.getKey())) {
+                result.add(new Supply(e.getValue(), 1, Unit.UNSPECIFIED));
             }
         }
         return result;

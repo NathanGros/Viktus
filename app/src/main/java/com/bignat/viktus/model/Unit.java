@@ -4,6 +4,7 @@ import androidx.annotation.StringRes;
 import com.bignat.viktus.R;
 
 public enum Unit {
+    UNSPECIFIED(R.string.unit_unspecified, Dimension.NONE, 1),
     PIECE(R.string.unit_piece, Dimension.COUNT, 1),
     GRAM(R.string.unit_gram, Dimension.MASS, 1),
     KILOGRAM(R.string.unit_kilogram, Dimension.MASS, 1000),
@@ -13,7 +14,7 @@ public enum Unit {
     TEASPOON(R.string.unit_teaspoon, Dimension.VOLUME, 5),
     CUP(R.string.unit_cup, Dimension.VOLUME, 240);
 
-    public enum Dimension { COUNT, MASS, VOLUME }
+    public enum Dimension { COUNT, MASS, VOLUME, NONE }
 
     public final int labelRes;
     public final Dimension dimension;

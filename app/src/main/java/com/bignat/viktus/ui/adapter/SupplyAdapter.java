@@ -68,7 +68,9 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
         Supply s = supplies.get(position);
 
         holder.name.setText(s.name);
-        holder.quantity.setText(formatQuantity(holder.itemView.getContext(), s));
+        String q = formatQuantity(holder.itemView.getContext(), s);
+        holder.quantity.setText(q);
+        holder.quantity.setVisibility(q.isEmpty() ? View.GONE : View.VISIBLE);
 
         holder.status.setVisibility(mode == Mode.STATUS ? View.VISIBLE : View.GONE);
         holder.checkBox.setVisibility(mode == Mode.CHECKBOX ? View.VISIBLE : View.GONE);
@@ -111,6 +113,7 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
     }
 
     private String formatQuantity(Context context, Supply s) {
+        if (s.unit == Unit.UNSPECIFIED) return "";
         String number = (s.quantity == Math.floor(s.quantity))
                 ? String.valueOf((long) s.quantity)   // 2.0 -> "2"
                 : String.valueOf(s.quantity);         // 0.5 -> "0.5"

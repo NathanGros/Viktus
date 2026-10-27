@@ -1,6 +1,7 @@
 package com.bignat.viktus.logic;
 
 import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import java.util.List;
 import java.util.Locale;
@@ -14,8 +15,12 @@ public class StockChecker {
         double available = 0;
 
         for (Supply s : stock) {
-            if (s.unit.dimension == ingredient.unit.dimension
-                    && normalize(s.name).equals(wanted)) {
+            if (!normalize(s.name).equals(wanted)) continue;
+
+            // "Unspecified" on either side: owning the item is enough
+            if (ingredient.unit == Unit.UNSPECIFIED || s.unit == Unit.UNSPECIFIED) return true;
+
+            if (s.unit.dimension == ingredient.unit.dimension) {
                 available += s.quantity * s.unit.factor;
             }
         }

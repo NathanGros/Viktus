@@ -1,6 +1,7 @@
 package com.bignat.viktus.logic;
 
 import com.bignat.viktus.model.Supply;
+import com.bignat.viktus.model.Unit;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ public class StockConsumer {
     // (1 kg minus 300 g becomes 0.7 kg). Empty entries are deleted.
     public static void consume(List<Supply> stock, List<Supply> ingredients) {
         for (Supply ing : ingredients) {
+            if (ing.unit == Unit.UNSPECIFIED) continue;
             double need = ing.quantity * ing.unit.factor;
             String wanted = key(ing);
 

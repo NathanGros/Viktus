@@ -78,6 +78,7 @@
     <string name="unit_tablespoon">tbsp</string>
     <string name="unit_teaspoon">tsp</string>
     <string name="unit_cup">cup</string>
+    <string name="unit_unspecified">unspecified</string>
 
     <!-- Data -->
     <string name="section_data">Data</string>
