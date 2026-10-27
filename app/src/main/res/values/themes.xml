@@ -22,4 +22,9 @@
         <item name="itemPaddingTop">0dp</item>
         <item name="itemPaddingBottom">0dp</item>
     </style>
+
+    <style name="App.Fab.Round" parent="Base.Theme.Viktus" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

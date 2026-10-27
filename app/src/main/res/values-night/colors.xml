@@ -7,6 +7,10 @@
     <color name="footer_icon">#ff00ff</color>
     <color name="footer_indicator">#00ffff</color>
 
+    <color name="fab_background">#ff9030</color>
+    <color name="fab_icon">#9030ff</color>
+    <color name="fab_ripple">#30ff90</color>
+
     <color name="app_background">#FFFF00</color>
     <color name="app_surface">#202020</color>
 

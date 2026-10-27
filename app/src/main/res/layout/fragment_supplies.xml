@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:clipToPadding="false"
             android:paddingTop="50dp"
-            android:paddingBottom="88dp" />
+            android:paddingBottom="90dp" />
     </LinearLayout>
 
     <TextView
@@ -32,17 +32,38 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_used"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:text="@string/used_shown" />
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="35dp"
+        android:minHeight="0dp"
+        android:text="@string/used_shown"
+        android:textColor="@color/fab_icon"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp"
+        app:hoveredFocusedTranslationZ="0dp"
+        app:borderWidth="0dp"
+        app:shapeAppearanceOverlay="@style/App.Fab.Round"
+        app:backgroundTint="@color/fab_background"
+        app:rippleColor="@color/fab_ripple" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_supply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="35dp"
         android:contentDescription="@string/add_supply"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        app:fabCustomSize="50dp"
+        app:maxImageSize="30dp"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp"
+        app:hoveredFocusedTranslationZ="0dp"
+        app:borderWidth="0dp"
+        app:shapeAppearanceOverlay="@style/App.Fab.Round"
+        app:backgroundTint="@color/fab_background"
+        app:tint="@color/fab_icon"
+        app:rippleColor="@color/fab_ripple" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
