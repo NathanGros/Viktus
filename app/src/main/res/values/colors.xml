@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="header_text">#ff9090</color>
+    <color name="header_background">#90ff90</color>
+
+    <color name="footer_background">#9090ff</color>
+    <color name="footer_icon">#ff90ff</color>
+    <color name="footer_indicator">#90ffff</color>
+
+    <color name="app_background">#FFFFFF</color>
+    <color name="app_surface">#FFFFFF</color>
+
+    <color name="text_primary">#1A1C19</color>
+    <color name="text_secondary">#424940</color>
+    <color name="text_hint">#72796F</color>
 </resources>
