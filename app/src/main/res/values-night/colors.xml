@@ -22,7 +22,6 @@
     <color name="fab_icon">@color/white</color>
     <color name="fab_ripple">@color/dark_gray</color>
 
-    <color name="main_item_background">@color/black</color>
     <color name="main_item_text">@color/white</color>
     <color name="main_item_border">@color/white</color>
     <color name="main_item_image_border">@color/white</color>

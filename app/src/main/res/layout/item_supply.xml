@@ -12,7 +12,7 @@
     app:cardCornerRadius="1dp"
     app:strokeWidth="0dp"
     app:strokeColor="@color/main_item_border"
-    app:cardBackgroundColor="@color/main_item_background"
+    app:cardBackgroundColor="@android:color/transparent"
     app:rippleColor="@color/main_item_ripple">
 
     <LinearLayout
