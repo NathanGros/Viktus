@@ -27,6 +27,7 @@
         android:layout_gravity="center"
         android:text="@string/empty_meals"
         android:textStyle="italic"
+        android:textColor="@color/text_secondary"
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

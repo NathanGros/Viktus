@@ -11,12 +11,12 @@
     <string name="title_shopping">Liste de courses</string>
     <string name="title_history">Historique</string>
     <string name="title_saves">Repas enregistrés</string>
-    <string name="empty_meals">Aucun repas prévu </string>
-    <string name="empty_shopping">Vous avez tout ce qu\'il faut! </string>
-    <string name="empty_history">Aucun repas mangé </string>
-    <string name="empty_saves">Aucun repas enregistré </string>
-    <string name="empty_supplies">Aucun ingrédient </string>
-    <string name="empty_ingredients">Aucun ingrédient </string>
+    <string name="empty_meals">"Aucun repas prévu "</string>
+    <string name="empty_shopping">"Vous avez tout ce qu\'il faut! "</string>
+    <string name="empty_history">"Aucun repas mangé "</string>
+    <string name="empty_saves">"Aucun repas enregistré "</string>
+    <string name="empty_supplies">"Oups… "</string>
+    <string name="empty_ingredients">"Aucun ingrédient "</string>
 
     <string name="cancel">Annuler</string>
     <string name="add">Ajouter</string>

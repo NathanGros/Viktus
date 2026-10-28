@@ -15,12 +15,12 @@
     <string name="title_shopping">Shopping list</string>
     <string name="title_history">History</string>
     <string name="title_saves">Saved meals</string>
-    <string name="empty_meals">Nothing planned </string>
-    <string name="empty_shopping">You have everything you need! </string>
-    <string name="empty_history">No meals eaten yet </string>
-    <string name="empty_saves">No saved meals yet </string>
-    <string name="empty_supplies">Uh oh… </string>
-    <string name="empty_ingredients">No ingredients yet </string>
+    <string name="empty_meals">"Nothing planned "</string>
+    <string name="empty_shopping">"You have everything you need! "</string>
+    <string name="empty_history">"No meals eaten yet "</string>
+    <string name="empty_saves">"No saved meals yet "</string>
+    <string name="empty_supplies">"Uh oh… "</string>
+    <string name="empty_ingredients">"No ingredients yet "</string>
 
     <!-- Buttons and labels -->
     <string name="cancel">Cancel</string>

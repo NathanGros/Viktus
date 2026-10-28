@@ -28,7 +28,7 @@
     <color name="main_item_image_border">@color/black</color>
     <color name="main_item_ripple">@color/light_gray</color>
 
-    <color name="text_primary">#1A1C19</color>
-    <color name="text_secondary">#424940</color>
-    <color name="text_hint">#72796F</color>
+    <color name="text_primary">@color/black</color>
+    <color name="text_secondary">@color/dark_gray</color>
+    <color name="text_hint">@color/gray</color>
 </resources>
