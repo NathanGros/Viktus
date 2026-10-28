@@ -7,22 +7,30 @@
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp">
+    android:layout_marginBottom="6dp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="100dp"
+    app:strokeWidth="0dp"
+    app:strokeColor="@color/main_item_border"
+    app:cardBackgroundColor="#fff"
+    app:rippleColor="@color/main_item_ripple">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/meal_image_card"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
             android:visibility="gone"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="100dp"
+            app:strokeWidth="0dp"
+            app:strokeColor="@color/main_item_image_border"
+            app:rippleColor="@android:color/transparent"
             app:cardElevation="0dp">
 
             <ImageView
@@ -37,9 +45,12 @@
             android:id="@+id/meal_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/main_item_text"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp">
+    android:layout_marginBottom="6dp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="100dp"
+    app:strokeWidth="0dp"
+    app:strokeColor="@color/main_item_border"
+    app:cardBackgroundColor="#fff"
+    app:rippleColor="@color/main_item_ripple">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/supply_status"
@@ -34,16 +41,20 @@
             android:id="@+id/supply_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/main_item_text"/>
 
         <TextView
             android:id="@+id/supply_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textSize="16sp" />
+            android:layout_marginStart="0dp"
+            android:textSize="18sp"
+            android:textColor="@color/main_item_text"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -42,6 +42,7 @@
         app:elevation="0dp"
         app:pressedTranslationZ="0dp"
         app:hoveredFocusedTranslationZ="0dp"
+        android:stateListAnimator="@null"
         app:borderWidth="0dp"
         app:shapeAppearanceOverlay="@style/App.Fab.Round"
         app:backgroundTint="@color/fab_background"

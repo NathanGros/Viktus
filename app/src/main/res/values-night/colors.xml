@@ -9,7 +9,13 @@
 
     <color name="fab_background">#ff9030</color>
     <color name="fab_icon">#9030ff</color>
-    <color name="fab_ripple">#30ff90</color>
+    <color name="fab_ripple">#309030</color>
+
+    <color name="main_item_background">#30ff90</color>
+    <color name="main_item_text">#ff90ff</color>
+    <color name="main_item_border">#909000</color>
+    <color name="main_item_image_border">#903090</color>
+    <color name="main_item_ripple">#903000</color>
 
     <color name="app_background">#FFFF00</color>
     <color name="app_surface">#202020</color>

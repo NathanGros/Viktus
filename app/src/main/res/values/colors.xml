@@ -11,6 +11,12 @@
     <color name="fab_icon">#ff90ff</color>
     <color name="fab_ripple">#90ffff</color>
 
+    <color name="main_item_background">#30ff90</color>
+    <color name="main_item_text">#30ff90</color>
+    <color name="main_item_border">#30ff90</color>
+    <color name="main_item_image_border">#30ff90</color>
+    <color name="main_item_ripple">#30ff90</color>
+
     <color name="app_background">#FFFF90</color>
     <color name="app_surface">#FFFFFF</color>
 
