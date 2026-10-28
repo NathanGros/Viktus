@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="header_text">#ff0000</color>
-    <color name="header_background">#00ff00</color>
+    <color name="very_black">#101010</color>
+    <color name="black">#202020</color>
+    <color name="dark_gray">#303030</color>
+    <color name="gray">#b0b0b0</color>
+    <color name="light_gray">#d0d0d0</color>
+    <color name="white">#e0e0e0</color>
+    <color name="very_white">#f0f0f0</color>
 
-    <color name="footer_background">#0000ff</color>
-    <color name="footer_icon">#ff00ff</color>
-    <color name="footer_indicator">#00ffff</color>
+    <color name="app_background">@color/black</color>
+    <color name="app_surface">@color/dark_gray</color>
 
-    <color name="fab_background">#ff9030</color>
-    <color name="fab_icon">#9030ff</color>
-    <color name="fab_ripple">#309030</color>
+    <color name="header_text">@color/white</color>
+    <color name="header_background">@color/very_black</color>
 
-    <color name="main_item_background">#30ff90</color>
-    <color name="main_item_text">#ff90ff</color>
-    <color name="main_item_border">#909000</color>
-    <color name="main_item_image_border">#903090</color>
-    <color name="main_item_ripple">#903000</color>
+    <color name="footer_background">@color/very_black</color>
+    <color name="footer_icon">@color/white</color>
+    <color name="footer_indicator">@color/white</color>
 
-    <color name="app_background">#FFFF00</color>
-    <color name="app_surface">#202020</color>
+    <color name="fab_background">@color/very_black</color>
+    <color name="fab_icon">@color/white</color>
+    <color name="fab_ripple">@color/dark_gray</color>
+
+    <color name="main_item_background">@color/black</color>
+    <color name="main_item_text">@color/white</color>
+    <color name="main_item_border">@color/white</color>
+    <color name="main_item_image_border">@color/white</color>
+    <color name="main_item_ripple">@color/dark_gray</color>
 
     <color name="text_primary">#E2E3DD</color>
     <color name="text_secondary">#C2C9BE</color>

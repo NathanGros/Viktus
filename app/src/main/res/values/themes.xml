@@ -10,8 +10,8 @@
     <style name="App.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:width">36dp</item>
         <item name="android:height">36dp</item>
-        <item name="android:color">@color/footer_indicator</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+        <item name="android:color">@android:color/transparent</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
     </style>
 
     <style name="App.BottomNav" parent="Widget.Material3.BottomNavigationView">
@@ -25,6 +25,6 @@
 
     <style name="App.Fab.Round" parent="Base.Theme.Viktus" >
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">10dp</item>
     </style>
 </resources>

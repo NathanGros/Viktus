@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="header_text">#ff9090</color>
-    <color name="header_background">#90ff90</color>
+    <color name="very_black">#101010</color>
+    <color name="black">#202020</color>
+    <color name="dark_gray">#404040</color>
+    <color name="gray">#b0b0b0</color>
+    <color name="light_gray">#d0d0d0</color>
+    <color name="white">#e0e0e0</color>
+    <color name="very_white">#f0f0f0</color>
 
-    <color name="footer_background">#9090ff</color>
-    <color name="footer_icon">#ff90ff</color>
-    <color name="footer_indicator">#90ffff</color>
+    <color name="app_background">@color/white</color>
+    <color name="app_surface">@color/light_gray</color>
 
-    <color name="fab_background">#9090ff</color>
-    <color name="fab_icon">#ff90ff</color>
-    <color name="fab_ripple">#90ffff</color>
+    <color name="header_text">@color/black</color>
+    <color name="header_background">@color/very_white</color>
 
-    <color name="main_item_background">#30ff90</color>
-    <color name="main_item_text">#30ff90</color>
-    <color name="main_item_border">#30ff90</color>
-    <color name="main_item_image_border">#30ff90</color>
-    <color name="main_item_ripple">#30ff90</color>
+    <color name="footer_background">@color/very_white</color>
+    <color name="footer_icon">@color/black</color>
+    <color name="footer_indicator">@color/black</color>
 
-    <color name="app_background">#FFFF90</color>
-    <color name="app_surface">#FFFFFF</color>
+    <color name="fab_background">@color/very_white</color>
+    <color name="fab_icon">@color/black</color>
+    <color name="fab_ripple">@color/light_gray</color>
+
+    <color name="main_item_background">@color/white</color>
+    <color name="main_item_text">@color/black</color>
+    <color name="main_item_border">@color/white</color>
+    <color name="main_item_image_border">@color/black</color>
+    <color name="main_item_ripple">@color/light_gray</color>
 
     <color name="text_primary">#1A1C19</color>
     <color name="text_secondary">#424940</color>

@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp"
+    android:layout_marginStart="26dp"
+    android:layout_marginEnd="21dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     app:cardElevation="0dp"
-    app:cardCornerRadius="100dp"
+    app:cardCornerRadius="1dp"
     app:strokeWidth="0dp"
     app:strokeColor="@color/main_item_border"
-    app:cardBackgroundColor="#fff"
+    app:cardBackgroundColor="@color/main_item_background"
     app:rippleColor="@color/main_item_ripple">
 
     <LinearLayout
@@ -20,7 +20,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_marginEnd="5dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_rounded"/>
 
         <ImageView
             android:id="@+id/supply_status"
@@ -41,8 +47,9 @@
             android:id="@+id/supply_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
@@ -54,6 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textSize="18sp"
             android:textColor="@color/main_item_text"/>
     </LinearLayout>
