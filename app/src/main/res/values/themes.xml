@@ -23,8 +23,28 @@
         <item name="itemPaddingBottom">0dp</item>
     </style>
 
-    <style name="App.Fab.Round" parent="Base.Theme.Viktus" >
+    <style name="App.Fab.RoundRect" parent="Base.Theme.Viktus" >
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="App.MaterialButton.RoundRect" parent="Widget.Material3.Button.IconButton.Filled" >
+        <item name="cornerRadius">10dp</item>
+        <item name="iconSize">26sp</item>
+    </style>
+
+    <style name="App.Input" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">3dp</item>
+        <item name="boxStrokeColor">@color/input_stroke</item>
+        <item name="boxStrokeErrorColor">@color/danger</item>
+        <item name="hintTextColor">@color/text_primary</item>
+        <item name="cursorColor">@color/text_primary</item>
+        <item name="errorTextColor">@color/danger</item>
+        <item name="cursorErrorColor">@color/danger</item>item>
     </style>
 </resources>
