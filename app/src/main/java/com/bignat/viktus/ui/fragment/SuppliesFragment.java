@@ -155,10 +155,11 @@ public class SuppliesFragment extends Fragment {
             if (isEmpty(s)) continue;   // skip supplies at 0 quantity
 
             if (sb.length() > 0) sb.append("\n");
+            sb.append(s.name);
 
             // "Unspecified" supplies have no quantity, so only the name is written
             if (s.unit != Unit.UNSPECIFIED) {
-                sb.append(s.name).append(":");
+                sb.append(":");
                 String number = (s.quantity == Math.floor(s.quantity))
                         ? String.valueOf((long) s.quantity)   // 2.0 -> "2"
                         : String.valueOf(s.quantity);
