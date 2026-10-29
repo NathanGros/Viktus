@@ -101,8 +101,10 @@ public class SupplyDialog extends DialogFragment {
         for (int i = 0; i < units.length; i++) {
             labels[i] = getString(units[i].labelRes);
         }
-        spinnerUnit.setAdapter(new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_spinner_dropdown_item, labels));
+        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(
+                requireContext(), R.layout.spinner_item, labels);
+        unitAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerUnit.setAdapter(unitAdapter);
         // No quantity field when the unit is "unspecified"
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/app_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +19,7 @@
             android:layout_gravity="center_vertical"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:textColor="@color/text_primary"
             android:maxLines="1"
             android:ellipsize="end" />
 
@@ -26,7 +29,8 @@
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/close"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_primary"/>
     </LinearLayout>
 
     <LinearLayout
@@ -38,17 +42,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/App.Input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name">
+            android:hint="@string/name"
+            android:textColorHint="@color/text_secondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/text_primary"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -60,25 +66,33 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_quantity"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="150dp"
+                style="@style/App.Input"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:hint="@string/quantity">
+                android:layout_marginEnd="12dp"
+                android:hint="@string/quantity"
+                android:textColorHint="@color/text_secondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_quantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="top"
                     android:inputType="numberDecimal"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinner_unit"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:background="@drawable/bg_spinner"
+                android:dropDownVerticalOffset="60dp"
+                android:minWidth="120dp"
+                android:popupBackground="@drawable/bg_spinner_popup"
+                android:spinnerMode="dropdown" />
         </LinearLayout>
     </LinearLayout>
 
@@ -90,11 +104,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:textColor="#C62828" />
+            style="@style/App.MaterialButton.RoundRect"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:iconGravity="textStart"
+            app:icon="@drawable/ic_trash"
+            app:backgroundTint="@color/danger"
+            app:iconTint="@color/white"
+            app:rippleColor="@color/fab_ripple" />
 
         <View
             android:layout_width="0dp"
@@ -106,12 +123,19 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            app:rippleColor="@color/fab_ripple"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            app:cornerRadius="10dp"
+            android:textColor="@color/fab_icon"
+            android:backgroundTint="@color/fab_background"
+            app:rippleColor="@color/fab_ripple"/>
     </LinearLayout>
 </LinearLayout>
