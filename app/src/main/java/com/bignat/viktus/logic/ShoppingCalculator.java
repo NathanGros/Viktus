@@ -54,7 +54,7 @@ public class ShoppingCalculator {
         Set<String> unspecifiedStock = new HashSet<>();
         for (Supply s : stock) {
             String n = s.name.trim().toLowerCase(Locale.ROOT);
-            ownedNames.add(n);
+            if (s.unit == Unit.UNSPECIFIED || s.quantity > 1e-9) ownedNames.add(n);
             if (s.unit == Unit.UNSPECIFIED) {
                 unspecifiedStock.add(n);
                 continue;

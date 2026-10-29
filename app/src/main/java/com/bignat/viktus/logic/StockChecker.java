@@ -16,6 +16,7 @@ public class StockChecker {
 
         for (Supply s : stock) {
             if (!normalize(s.name).equals(wanted)) continue;
+            if (s.unit != Unit.UNSPECIFIED && s.quantity <= 1e-9) continue;   // empty stock doesn't count
 
             // "Unspecified" on either side: owning the item is enough
             if (ingredient.unit == Unit.UNSPECIFIED || s.unit == Unit.UNSPECIFIED) return true;

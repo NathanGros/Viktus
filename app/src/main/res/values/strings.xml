@@ -43,6 +43,8 @@
     <string name="remove_image">Remove image</string>
     <string name="used_shown">Used: shown</string>
     <string name="used_hidden">Used: hidden</string>
+    <string name="search_supplies">Search supplies</string>
+    <string name="unit">Select unit:</string>
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>

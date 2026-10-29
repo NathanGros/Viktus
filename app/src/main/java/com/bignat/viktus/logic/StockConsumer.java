@@ -11,16 +11,15 @@ public class StockConsumer {
 
     // Removes the ingredients from the stock, in place.
     // Stock entries are used in list order and keep their own unit
-    // (1 kg minus 300 g becomes 0.7 kg). Empty entries are deleted.
+    // (1 kg minus 300 g becomes 0.7 kg)..
     public static void consume(List<Supply> stock, List<Supply> ingredients) {
         for (Supply ing : ingredients) {
             if (ing.unit == Unit.UNSPECIFIED) continue;
             double need = ing.quantity * ing.unit.factor;
             String wanted = key(ing);
 
-            Iterator<Supply> it = stock.iterator();
-            while (it.hasNext() && need > 1e-9) {
-                Supply s = it.next();
+            for (Supply s : stock) {
+                if (need <= 1e-9) break;
                 if (!key(s).equals(wanted)) continue;
 
                 double base = s.quantity * s.unit.factor;
@@ -28,11 +27,7 @@ public class StockConsumer {
                 need -= take;
 
                 double left = base - take;
-                if (left <= 1e-9) {
-                    it.remove();
-                } else {
-                    s.quantity = Math.round(left / s.unit.factor * 1000) / 1000.0;
-                }
+                s.quantity = left <= 1e-9 ? 0 : Math.round(left / s.unit.factor * 1000) / 1000.0;
             }
         }
     }

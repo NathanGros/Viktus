@@ -38,6 +38,8 @@
     <string name="remove_image">Retirer l\'image</string>
     <string name="used_shown">Utilisés : affichés</string>
     <string name="used_hidden">Utilisés : masqués</string>
+    <string name="search_supplies">Rechercher un produit</string>
+    <string name="unit">Choisissez l\'unité:</string>
 
     <string name="add_meal">Ajouter un repas</string>
     <string name="edit_title">Modifier %1$s</string>
