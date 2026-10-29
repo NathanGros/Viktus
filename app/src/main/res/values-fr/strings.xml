@@ -40,6 +40,7 @@
     <string name="used_hidden">Utilisés : masqués</string>
     <string name="search_supplies">Rechercher un produit</string>
     <string name="unit">Choisissez l\'unité:</string>
+    <string name="copy_clipboard">Copiez dans le presse-papier</string>
 
     <string name="add_meal">Ajouter un repas</string>
     <string name="edit_title">Modifier %1$s</string>
@@ -54,6 +55,8 @@
     <string name="toast_planned">%1$s ajouté aux repas prévus</string>
     <string name="toast_saved">%1$s enregistré</string>
     <string name="toast_already_saved">%1$s est déjà enregistré</string>
+    <string name="toast_copied">Stock copié dans le presse-papiers</string>
+    <string name="toast_nothing_to_copy">Aucun produit à copier</string>
 
     <string name="title_settings">Paramètres</string>
     <string name="select_theme">Choisir le thème</string>

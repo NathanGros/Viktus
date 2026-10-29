@@ -45,6 +45,7 @@
     <string name="used_hidden">Used: hidden</string>
     <string name="search_supplies">Search supplies</string>
     <string name="unit">Select unit:</string>
+    <string name="copy_clipboard">Copy to clipboard</string>
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>
@@ -61,6 +62,8 @@
     <string name="toast_planned">%1$s added to planned meals</string>
     <string name="toast_saved">%1$s saved</string>
     <string name="toast_already_saved">%1$s is already saved</string>
+    <string name="toast_copied">Supplies copied to clipboard</string>
+    <string name="toast_nothing_to_copy">No supplies to copy</string>
 
     <!-- Settings -->
     <string name="title_settings">Settings</string>

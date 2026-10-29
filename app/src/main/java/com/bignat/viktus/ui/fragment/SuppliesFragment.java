@@ -1,9 +1,14 @@
 package com.bignat.viktus.ui.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +55,7 @@ public class SuppliesFragment extends Fragment {
         emptyText = view.findViewById(R.id.supplies_empty);
         btnAdd = view.findViewById(R.id.btn_add_supply);
         fabUsed = view.findViewById(R.id.fab_used);
+        view.findViewById(R.id.fab_copy_clipboard).setOnClickListener(v -> copyToClipboard());
 
         RecyclerView list = view.findViewById(R.id.supplies_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -140,5 +146,39 @@ public class SuppliesFragment extends Fragment {
 
     private static boolean isEmpty(Supply s) {
         return s.unit != Unit.UNSPECIFIED && s.quantity <= 1e-9;
+    }
+
+    private void copyToClipboard() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Supply s : vm.supplies) {
+            if (isEmpty(s)) continue;   // skip supplies at 0 quantity
+
+            if (sb.length() > 0) sb.append("\n");
+
+            // "Unspecified" supplies have no quantity, so only the name is written
+            if (s.unit != Unit.UNSPECIFIED) {
+                sb.append(s.name).append(":");
+                String number = (s.quantity == Math.floor(s.quantity))
+                        ? String.valueOf((long) s.quantity)   // 2.0 -> "2"
+                        : String.valueOf(s.quantity);
+                sb.append(" ").append(number).append(" ").append(getString(s.unit.labelRes));
+            }
+        }
+
+        if (sb.length() == 0) {
+            Toast.makeText(requireContext(), R.string.toast_nothing_to_copy,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ClipboardManager clipboard = (ClipboardManager)
+                requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("Supplies", sb.toString()));
+
+        // Android 13+ already shows its own "Copied" confirmation
+        if (Build.VERSION.SDK_INT < 33) {
+            Toast.makeText(requireContext(), R.string.toast_copied, Toast.LENGTH_SHORT).show();
+        }
     }
 }
