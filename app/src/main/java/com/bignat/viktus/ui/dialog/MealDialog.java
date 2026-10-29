@@ -20,6 +20,7 @@ import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -337,7 +338,7 @@ public class MealDialog extends DialogFragment {
         MaterialButton btnHistorySave = view.findViewById(R.id.btn_history_save);
         btnHistorySave.setText(mode == DialogMode.SAVED ? getString(R.string.unsave) : getString(R.string.save));
         if (mode == DialogMode.SAVED) {
-            btnHistorySave.setTextColor(android.graphics.Color.parseColor("#C62828"));
+            btnHistorySave.setTextColor(ContextCompat.getColor(requireContext(), R.color.danger));
         }
 
         btnHistorySave.setOnClickListener(v -> {

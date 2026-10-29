@@ -300,7 +300,11 @@
             android:id="@+id/btn_history_save"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            app:rippleColor="@color/fab_ripple"/>
 
         <View
             android:layout_width="0dp"
@@ -311,6 +315,11 @@
             android:id="@+id/btn_add_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_to_planned" />
+            android:layout_marginStart="8dp"
+            app:cornerRadius="10dp"
+            android:text="@string/add_to_planned"
+            android:textColor="@color/fab_icon"
+            android:backgroundTint="@color/fab_background"
+            app:rippleColor="@color/fab_ripple" />
     </LinearLayout>
 </LinearLayout>
