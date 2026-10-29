@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="@color/app_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -25,15 +25,16 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_back"
-            app:tint="?attr/colorOnSurface" />
+            app:tint="@color/text_primary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/title_settings"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"/>
     </LinearLayout>
 
     <TextView
@@ -41,7 +42,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/select_theme"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@color/text_primary"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/theme_light" />
+                android:text="@string/theme_light"
+                android:textColor="@color/text_primary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/theme_dark" />
+                android:text="@string/theme_dark"
+                android:textColor="@color/text_primary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -123,57 +127,82 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/theme_system" />
+                android:text="@string/theme_system"
+                android:textColor="@color/text_primary"/>
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:padding="16dp"
         android:text="@string/select_language"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@color/text_primary"/>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_marginEnd="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxStrokeColor="@color/input_stroke"
+        app:boxStrokeErrorColor="@color/danger"
+        app:hintTextColor="@color/text_primary"
+        app:cursorColor="@color/text_primary"
+        app:errorTextColor="@color/danger"
+        app:cursorErrorColor="@color/danger"
+        android:textColorHint="@color/text_secondary">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/language_dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            android:saveEnabled="false" />
+            android:saveEnabled="false"
+            android:textColor="@color/text_primary"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:padding="16dp"
         android:text="@string/section_data"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@color/text_primary"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_clean_images"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        app:cornerRadius="10dp"
+        android:textColor="@color/fab_icon"
+        android:backgroundTint="@color/fab_background"
+        app:rippleColor="@color/fab_ripple"
         android:text="@string/clean_images" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_clear_data"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/clear_data"
-        android:textColor="#C62828"
-        app:strokeColor="#C62828" />
+        app:cornerRadius="10dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/danger"
+        app:rippleColor="@color/fab_ripple"
+        android:text="@string/clear_data" />
 </LinearLayout>
