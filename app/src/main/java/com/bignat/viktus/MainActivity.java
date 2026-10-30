@@ -45,11 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 AppViewModel vm = new ViewModelProvider(this).get(AppViewModel.class);
 
                 if (data != null && data.getBooleanExtra("clear_all", false)) {
-                    vm.clearAll();                       // already includes the history
-                } else if (data != null && data.getBooleanExtra("clear_history", false)) {
-                    vm.clearHistory();
+                    vm.clearAll();   // already includes history and supplies
+                } else if (data != null) {
+                    if (data.getBooleanExtra("clear_history", false)) vm.clearHistory();
+                    if (data.getBooleanExtra("clear_supplies", false)) vm.clearSupplies();
                 }
-                vm.loaded.setValue(true);                // every page redraws
+                vm.loaded.setValue(true);   // every page redraws
             });
 
     @Override

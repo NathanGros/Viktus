@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView swatchLight, swatchDark, swatchSystem;
     private boolean dataCleared = false;
     private boolean historyCleared = false;
+    private boolean suppliesCleared = false;
     private String pendingClear = "";   // which button opened the confirm dialog: "all" or "history"
 
     @Override
@@ -85,6 +86,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             dataCleared = savedInstanceState.getBoolean("data_cleared");
             historyCleared = savedInstanceState.getBoolean("history_cleared");
+            suppliesCleared = savedInstanceState.getBoolean("supplies_cleared");
             pendingClear = savedInstanceState.getString("pending_clear", "");
             updateResult();
         }
@@ -107,11 +109,23 @@ public class SettingsActivity extends AppCompatActivity {
                     .show(getSupportFragmentManager(), "confirm_clear");
         });
 
+        findViewById(R.id.btn_clear_supplies).setOnClickListener(v -> {
+            pendingClear = "supplies";
+            ConfirmDialog.newInstance(
+                            getString(R.string.clear_supplies_title),
+                            getString(R.string.clear_supplies_message),
+                            getString(R.string.clear_supplies_confirm))
+                    .show(getSupportFragmentManager(), "confirm_clear");
+        });
+
         getSupportFragmentManager().setFragmentResultListener(
                 ConfirmDialog.RESULT_KEY, this, (key, result) -> {
                     if ("history".equals(pendingClear)) {
                         historyCleared = true;
                         Toast.makeText(this, R.string.toast_history_cleared, Toast.LENGTH_SHORT).show();
+                    } else if ("supplies".equals(pendingClear)) {
+                        suppliesCleared = true;
+                        Toast.makeText(this, R.string.toast_supplies_cleared, Toast.LENGTH_SHORT).show();
                     } else {
                         dataCleared = true;
                         Toast.makeText(this, R.string.toast_data_cleared, Toast.LENGTH_SHORT).show();
@@ -134,10 +148,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     // Tells MainActivity what to clear when this screen closes
     private void updateResult() {
-        if (!dataCleared && !historyCleared) return;
+        if (!dataCleared && !historyCleared && !suppliesCleared) return;
         Intent data = new Intent();
         data.putExtra("clear_all", dataCleared);
         data.putExtra("clear_history", historyCleared);
+        data.putExtra("clear_supplies", suppliesCleared);
         setResult(RESULT_OK, data);
     }
 
@@ -146,6 +161,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putBoolean("data_cleared", dataCleared);
         outState.putBoolean("history_cleared", historyCleared);
+        outState.putBoolean("supplies_cleared", suppliesCleared);
         outState.putString("pending_clear", pendingClear);
     }
 

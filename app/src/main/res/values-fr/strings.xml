@@ -93,4 +93,9 @@
     <string name="clear_history_message">Cela supprime définitivement toute l\'historique. Cette action est irréversible.</string>
     <string name="clear_history_confirm">Effacer</string>
     <string name="toast_history_cleared">Historique effacée</string>
+    <string name="clear_supplies">Effacer les ingrédients</string>
+    <string name="clear_supplies_title">Effacer tous les ingrédients ?</string>
+    <string name="clear_supplies_message">Cela supprime définitivement tous les ingrédients. Cette action est irréversible.</string>
+    <string name="clear_supplies_confirm">Effacer</string>
+    <string name="toast_supplies_cleared">Ingrédients effacés</string>
 </resources>

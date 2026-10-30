@@ -103,4 +103,9 @@
     <string name="clear_history_message">This permanently deletes all history. This action cannot be undone.</string>
     <string name="clear_history_confirm">Clear</string>
     <string name="toast_history_cleared">History cleared</string>
+    <string name="clear_supplies">Clear supplies</string>
+    <string name="clear_supplies_title">Clear all supplies?</string>
+    <string name="clear_supplies_message">This permanently deletes all supplies. This action cannot be undone.</string>
+    <string name="clear_supplies_confirm">Clear</string>
+    <string name="toast_supplies_cleared">Supplies cleared</string>
 </resources>

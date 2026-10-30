@@ -134,6 +134,11 @@ public class AppViewModel extends AndroidViewModel {
         saveHistory();   // writes an empty list, which deletes the rows
     }
 
+    public void clearSupplies() {
+        supplies.clear();
+        saveSupplies();   // writes an empty list, which deletes the rows
+    }
+
     // Called when a meal is eaten: takes its ingredients out of the stock
     public void consumeIngredients(Meal meal) {
         StockConsumer.consume(supplies, meal.supplies);
