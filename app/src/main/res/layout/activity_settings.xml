@@ -141,34 +141,16 @@
         android:textSize="18sp"
         android:textColor="@color/text_primary"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <Spinner
+        android:id="@+id/language_dropdown"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeWidth="2dp"
-        app:boxStrokeWidthFocused="2dp"
-        app:boxStrokeColor="@color/input_stroke"
-        app:boxStrokeErrorColor="@color/danger"
-        app:hintTextColor="@color/text_primary"
-        app:cursorColor="@color/text_primary"
-        app:errorTextColor="@color/danger"
-        app:cursorErrorColor="@color/danger"
-        android:textColorHint="@color/text_secondary">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/language_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
-            android:saveEnabled="false"
-            android:textColor="@color/text_primary"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:background="@drawable/bg_spinner"
+        android:dropDownVerticalOffset="60dp"
+        android:popupBackground="@drawable/bg_spinner_popup"
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:layout_width="match_parent"

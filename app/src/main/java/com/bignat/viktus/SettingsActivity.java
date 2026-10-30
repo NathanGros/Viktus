@@ -6,8 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -61,10 +64,13 @@ public class SettingsActivity extends AppCompatActivity {
         final String[] tags = {"", "en", "fr"};
         String[] names = {getString(R.string.language_system), "English", "Français"};
 
-        MaterialAutoCompleteTextView dropdown = findViewById(R.id.language_dropdown);
-        dropdown.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names));
+        Spinner spinner = findViewById(R.id.language_dropdown);
+        ArrayAdapter<String> languageAdapter =
+                new ArrayAdapter<>(this, R.layout.spinner_item, names);
+        languageAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setAdapter(languageAdapter);
 
-        // Show the current choice (false = don't filter the list)
+// Select the current language
         LocaleListCompat current = AppCompatDelegate.getApplicationLocales();
         int selected = 0;
         if (!current.isEmpty()) {
@@ -72,13 +78,21 @@ public class SettingsActivity extends AppCompatActivity {
                 if (tags[i].equals(current.get(0).getLanguage())) selected = i;
             }
         }
-        dropdown.setText(names[selected], false);
+        final int currentIndex = selected;
 
-        dropdown.setOnItemClickListener((parent, v, position, id) -> {
-            // Android saves the choice and recreates the screens in the new language
-            AppCompatDelegate.setApplicationLocales(tags[position].isEmpty()
-                    ? LocaleListCompat.getEmptyLocaleList()
-                    : LocaleListCompat.forLanguageTags(tags[position]));
+        spinner.setSelection(selected, false);   // false = don't fire the listener
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                if (position == currentIndex) return;   // nothing changed
+                AppCompatDelegate.setApplicationLocales(tags[position].isEmpty()
+                        ? LocaleListCompat.getEmptyLocaleList()
+                        : LocaleListCompat.forLanguageTags(tags[position]));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         findViewById(R.id.btn_clean_images).setOnClickListener(v -> cleanUnusedImages());
