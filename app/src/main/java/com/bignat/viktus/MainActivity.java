@@ -19,7 +19,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bignat.viktus.data.AppViewModel;
-import com.bignat.viktus.ui.SettingsActivity;
 import com.bignat.viktus.ui.fragment.HistoryFragment;
 import com.bignat.viktus.ui.fragment.MealsFragment;
 import com.bignat.viktus.ui.fragment.SavesFragment;

@@ -27,7 +27,13 @@
         </activity>
 
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="SourceLockedOrientationActivity" />
+
+        <activity
+            android:name=".ShoppingCartActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="SourceLockedOrientationActivity" />

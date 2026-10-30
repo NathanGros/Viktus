@@ -1,12 +1,8 @@
 package com.bignat.viktus.ui.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,7 +11,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bignat.viktus.ui.SettingsActivity;
 import com.bignat.viktus.ui.adapter.MealAdapter;
 import com.bignat.viktus.R;
 import com.bignat.viktus.data.AppViewModel;

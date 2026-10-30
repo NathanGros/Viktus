@@ -9,6 +9,7 @@
     <string name="title_meals">Repas prévus</string>
     <string name="title_supplies">Ingrédients</string>
     <string name="title_shopping">Liste de courses</string>
+    <string name="title_shopping_cart">Panier de courses</string>
     <string name="title_history">Historique</string>
     <string name="title_saves">Repas enregistrés</string>
     <string name="empty_meals">"Aucun repas prévu "</string>
@@ -17,6 +18,7 @@
     <string name="empty_saves">"Aucun repas enregistré "</string>
     <string name="empty_supplies">"Oups… "</string>
     <string name="empty_ingredients">"Aucun ingrédient "</string>
+    <string name="empty_cart">"Le panier est vide "</string>
 
     <string name="cancel">Annuler</string>
     <string name="add">Ajouter</string>
@@ -41,6 +43,7 @@
     <string name="search_supplies">Rechercher un produit</string>
     <string name="unit">Choisissez l\'unité:</string>
     <string name="copy_clipboard">Copiez dans le presse-papier</string>
+    <string name="go_shopping">Faire les courses</string>
 
     <string name="add_meal">Ajouter un repas</string>
     <string name="edit_title">Modifier %1$s</string>

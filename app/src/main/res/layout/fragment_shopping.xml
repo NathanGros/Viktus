@@ -29,6 +29,25 @@
         android:textColor="@color/text_secondary"
         android:visibility="gone" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_go_shopping"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="38dp"
+        android:minHeight="0dp"
+        android:text="@string/go_shopping"
+        android:textColor="@color/fab_icon"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp"
+        app:hoveredFocusedTranslationZ="0dp"
+        android:stateListAnimator="@null"
+        app:borderWidth="0dp"
+        app:shapeAppearanceOverlay="@style/App.Fab.RoundRect"
+        app:backgroundTint="@color/fab_background"
+        app:rippleColor="@color/fab_ripple" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_copy_clipboard"
         android:layout_width="wrap_content"

@@ -1,13 +1,17 @@
 package com.bignat.viktus.ui.fragment;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignat.viktus.R;
+import com.bignat.viktus.ShoppingCartActivity;
+import com.bignat.viktus.logic.StockMerger;
 import com.bignat.viktus.model.Unit;
 import com.bignat.viktus.ui.adapter.SupplyAdapter;
 import com.bignat.viktus.data.AppViewModel;
@@ -31,6 +37,19 @@ public class ShoppingFragment extends Fragment {
     private SupplyAdapter adapter;
     private AppViewModel vm;
     private View emptyText;
+    @SuppressWarnings({"unchecked", "deprecation"})
+    private final ActivityResultLauncher<Intent> cartLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() != Activity.RESULT_OK || result.getData() == null) return;
+
+                ArrayList<Supply> bought = (ArrayList<Supply>) result.getData()
+                        .getSerializableExtra(ShoppingCartActivity.EXTRA_ITEMS);
+                if (bought == null) return;
+
+                StockMerger.merge(vm.supplies, bought);
+                vm.saveSupplies();
+                refresh();   // the shopping list shrinks, since the stock grew
+            });
 
     public ShoppingFragment() {
         super(R.layout.fragment_shopping);
@@ -51,6 +70,12 @@ public class ShoppingFragment extends Fragment {
 
         // Recompute once the database has been read
         vm.loaded.observe(getViewLifecycleOwner(), ok -> refresh());
+
+        view.findViewById(R.id.fab_go_shopping).setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), ShoppingCartActivity.class);
+            intent.putExtra(ShoppingCartActivity.EXTRA_ITEMS, new ArrayList<>(items));
+            cartLauncher.launch(intent);
+        });
     }
 
     // With the pager, onResume runs each time you swipe to this page,

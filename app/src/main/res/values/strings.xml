@@ -13,6 +13,7 @@
     <string name="title_meals">Planned meals</string>
     <string name="title_supplies">Supplies</string>
     <string name="title_shopping">Shopping list</string>
+    <string name="title_shopping_cart">Shopping cart</string>
     <string name="title_history">History</string>
     <string name="title_saves">Saved meals</string>
     <string name="empty_meals">"Nothing planned "</string>
@@ -21,6 +22,7 @@
     <string name="empty_saves">"No saved meals yet "</string>
     <string name="empty_supplies">"Uh oh… "</string>
     <string name="empty_ingredients">"No ingredients yet "</string>
+    <string name="empty_cart">"Nothing in the cart "</string>
 
     <!-- Buttons and labels -->
     <string name="cancel">Cancel</string>
@@ -46,6 +48,7 @@
     <string name="search_supplies">Search supplies</string>
     <string name="unit">Select unit:</string>
     <string name="copy_clipboard">Copy to clipboard</string>
+    <string name="go_shopping">Go shopping</string>
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>

@@ -1,4 +1,4 @@
-package com.bignat.viktus.ui;
+package com.bignat.viktus;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
-import com.bignat.viktus.R;
 import com.bignat.viktus.data.AppDao;
 import com.bignat.viktus.data.AppDatabase;
 import com.bignat.viktus.data.ThemeManager;
