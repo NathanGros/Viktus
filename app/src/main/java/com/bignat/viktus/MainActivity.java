@@ -40,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Intent> settingsLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    AppViewModel vm = new ViewModelProvider(this).get(AppViewModel.class);
-                    vm.clearAll();
-                    vm.loaded.setValue(true);   // every page redraws
+                if (result.getResultCode() != Activity.RESULT_OK) return;
+
+                Intent data = result.getData();
+                AppViewModel vm = new ViewModelProvider(this).get(AppViewModel.class);
+
+                if (data != null && data.getBooleanExtra("clear_all", false)) {
+                    vm.clearAll();                       // already includes the history
+                } else if (data != null && data.getBooleanExtra("clear_history", false)) {
+                    vm.clearHistory();
                 }
+                vm.loaded.setValue(true);                // every page redraws
             });
 
     @Override

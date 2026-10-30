@@ -194,6 +194,20 @@
         android:text="@string/clean_images" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_clear_history"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cornerRadius="10dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/danger"
+        app:rippleColor="@color/fab_ripple"
+        android:text="@string/clear_history" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_clear_data"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"

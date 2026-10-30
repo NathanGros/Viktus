@@ -77,12 +77,17 @@
     <string name="unit_unspecified">non précisé</string>
 
     <string name="section_data">Données</string>
+    <string name="clean_images">Supprimer les photos inutilisées</string>
+    <string name="toast_images_cleaned">%1$d photo(s) inutilisée(s) supprimée(s)</string>
+    <string name="toast_no_unused_images">Aucune photo inutilisée</string>
     <string name="clear_data">Effacer toutes les données</string>
     <string name="clear_data_title">Effacer toutes les données ?</string>
     <string name="clear_data_message">Cela supprime définitivement tous les repas, produits, l\'historique, les repas enregistrés et les photos. Cette action est irréversible.</string>
     <string name="clear_data_confirm">Effacer</string>
     <string name="toast_data_cleared">Données effacées</string>
-    <string name="clean_images">Supprimer les photos inutilisées</string>
-    <string name="toast_images_cleaned">%1$d photo(s) inutilisée(s) supprimée(s)</string>
-    <string name="toast_no_unused_images">Aucune photo inutilisée</string>
+    <string name="clear_history">Effacer l\'historique</string>
+    <string name="clear_history_title">Effacer l\'historique ?</string>
+    <string name="clear_history_message">Cela supprime définitivement toute l\'historique. Cette action est irréversible.</string>
+    <string name="clear_history_confirm">Effacer</string>
+    <string name="toast_history_cleared">Historique effacée</string>
 </resources>

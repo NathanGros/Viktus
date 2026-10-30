@@ -1,6 +1,7 @@
 package com.bignat.viktus.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private ImageView swatchLight, swatchDark, swatchSystem;
     private boolean dataCleared = false;
+    private boolean historyCleared = false;
+    private String pendingClear = "";   // which button opened the confirm dialog: "all" or "history"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,27 +81,44 @@ public class SettingsActivity extends AppCompatActivity {
                     : LocaleListCompat.forLanguageTags(tags[position]));
         });
 
-        // A theme or language change recreates this screen, so remember that data was cleared
+        findViewById(R.id.btn_clean_images).setOnClickListener(v -> cleanUnusedImages());
+
         if (savedInstanceState != null) {
             dataCleared = savedInstanceState.getBoolean("data_cleared");
-            if (dataCleared) setResult(RESULT_OK);
+            historyCleared = savedInstanceState.getBoolean("history_cleared");
+            pendingClear = savedInstanceState.getString("pending_clear", "");
+            updateResult();
         }
 
-        findViewById(R.id.btn_clear_data).setOnClickListener(v ->
-                ConfirmDialog.newInstance(
-                                getString(R.string.clear_data_title),
-                                getString(R.string.clear_data_message),
-                                getString(R.string.clear_data_confirm))
-                        .show(getSupportFragmentManager(), "confirm_clear"));
+        findViewById(R.id.btn_clear_data).setOnClickListener(v -> {
+            pendingClear = "all";
+            ConfirmDialog.newInstance(
+                            getString(R.string.clear_data_title),
+                            getString(R.string.clear_data_message),
+                            getString(R.string.clear_data_confirm))
+                    .show(getSupportFragmentManager(), "confirm_clear");
+        });
+
+        findViewById(R.id.btn_clear_history).setOnClickListener(v -> {
+            pendingClear = "history";
+            ConfirmDialog.newInstance(
+                            getString(R.string.clear_history_title),
+                            getString(R.string.clear_history_message),
+                            getString(R.string.clear_history_confirm))
+                    .show(getSupportFragmentManager(), "confirm_clear");
+        });
 
         getSupportFragmentManager().setFragmentResultListener(
                 ConfirmDialog.RESULT_KEY, this, (key, result) -> {
-                    dataCleared = true;
-                    setResult(RESULT_OK);   // tells the Meals page to clear its lists
-                    Toast.makeText(this, R.string.toast_data_cleared, Toast.LENGTH_SHORT).show();
+                    if ("history".equals(pendingClear)) {
+                        historyCleared = true;
+                        Toast.makeText(this, R.string.toast_history_cleared, Toast.LENGTH_SHORT).show();
+                    } else {
+                        dataCleared = true;
+                        Toast.makeText(this, R.string.toast_data_cleared, Toast.LENGTH_SHORT).show();
+                    }
+                    updateResult();
                 });
-
-        findViewById(R.id.btn_clean_images).setOnClickListener(v -> cleanUnusedImages());
     }
 
     private void choose(int mode) {
@@ -113,10 +133,21 @@ public class SettingsActivity extends AppCompatActivity {
         swatchSystem.setSelected(mode == ThemeManager.SYSTEM);
     }
 
+    // Tells MainActivity what to clear when this screen closes
+    private void updateResult() {
+        if (!dataCleared && !historyCleared) return;
+        Intent data = new Intent();
+        data.putExtra("clear_all", dataCleared);
+        data.putExtra("clear_history", historyCleared);
+        setResult(RESULT_OK, data);
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("data_cleared", dataCleared);
+        outState.putBoolean("history_cleared", historyCleared);
+        outState.putString("pending_clear", pendingClear);
     }
 
     private void cleanUnusedImages() {
