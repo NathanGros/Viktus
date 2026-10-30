@@ -96,6 +96,7 @@ public class StockDialog extends DialogFragment {
         MaterialButton btnDelete = view.findViewById(R.id.btn_delete);
         MaterialButton btnConfirm = view.findViewById(R.id.btn_confirm);
         MaterialButtonToggleGroup toggle = view.findViewById(R.id.toggle_available);
+        TextView stockText = view.findViewById(R.id.stock_text);
 
         // Which parts are visible in which mode
         title.setText(isEdit ? originalName : getString(R.string.add_supply));
@@ -107,6 +108,7 @@ public class StockDialog extends DialogFragment {
         toggle.setVisibility(unspecifiedEdit ? View.VISIBLE : View.GONE);
         btnConfirm.setVisibility(View.VISIBLE);
         btnConfirm.setContentDescription(getString(isEdit ? R.string.done : R.string.add));
+        stockText.setVisibility(isEdit ? View.VISIBLE : View.GONE);
 
         if (unspecifiedEdit && savedInstanceState == null) {
             toggle.check(args.getDouble(KEY_QUANTITY) > 1e-9 ? R.id.btn_yes : R.id.btn_no);

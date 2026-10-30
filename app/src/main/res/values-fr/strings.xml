@@ -41,11 +41,12 @@
     <string name="used_shown">Utilisés : affichés</string>
     <string name="used_hidden">Utilisés : masqués</string>
     <string name="search_supplies">Rechercher un produit</string>
-    <string name="unit">Choisissez l\'unité:</string>
+    <string name="unit">Choisissez l\'unité :</string>
     <string name="copy_clipboard">Copiez dans le presse-papier</string>
     <string name="go_shopping">Faire les courses</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="in_stock">En stock :</string>
 
     <string name="add_meal">Ajouter un repas</string>
     <string name="edit_title">Modifier %1$s</string>

@@ -51,6 +51,7 @@
     <string name="go_shopping">Go shopping</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="in_stock">In stock:</string>
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>

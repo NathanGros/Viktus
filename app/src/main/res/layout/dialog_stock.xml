@@ -83,6 +83,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/stock_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/in_stock"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary" />
+
+
         <!-- Edit mode (the unit is shown as a read-only suffix) -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_quantity"
