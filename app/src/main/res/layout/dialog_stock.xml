@@ -131,6 +131,7 @@
                 android:layout_weight="1"
                 android:text="@string/yes"
                 app:cornerRadius="10dp"
+                android:letterSpacing="0"
                 app:strokeWidth="0dp"
                 app:backgroundTint="@color/toggle_background"
                 android:textColor="@color/toggle_text"
@@ -144,6 +145,7 @@
                 android:layout_weight="1"
                 android:text="@string/no"
                 app:cornerRadius="10dp"
+                android:letterSpacing="0"
                 app:strokeWidth="0dp"
                 app:backgroundTint="@color/toggle_background"
                 android:textColor="@color/toggle_text"
@@ -182,6 +184,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:textAllCaps="false"
+            android:letterSpacing="0"
             android:textColor="@color/text_primary"
             app:rippleColor="@color/fab_ripple"/>
 
@@ -193,6 +196,7 @@
             app:cornerRadius="10dp"
             android:text="@string/done"
             android:textAllCaps="false"
+            android:letterSpacing="0"
             android:textColor="@color/fab_icon"
             android:backgroundTint="@color/fab_background"
             app:rippleColor="@color/fab_ripple"/>
