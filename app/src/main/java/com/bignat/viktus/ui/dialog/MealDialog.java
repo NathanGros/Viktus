@@ -352,6 +352,12 @@ public class MealDialog extends DialogFragment {
                 sendResult(ACTION_BOOKMARK, original);
             }
         });
+
+        MaterialButton btnViewSave = view.findViewById(R.id.btn_view_save);
+
+        btnViewSave.setOnClickListener(v -> {
+            sendResult(ACTION_BOOKMARK, original);
+        });
     }
 
     private boolean isEditable() {

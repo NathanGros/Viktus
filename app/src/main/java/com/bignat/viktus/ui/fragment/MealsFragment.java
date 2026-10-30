@@ -90,6 +90,16 @@ public class MealsFragment extends Fragment {
                         refreshEmptyState();
                         return;
                     }
+                    if (MealDialog.ACTION_BOOKMARK.equals(action)) {
+                        Meal meal = vm.meals.get(position);
+                        boolean added = vm.addToSaved(meal);
+                        android.widget.Toast.makeText(requireContext(),
+                                added ? getString(R.string.toast_saved, meal.name) : getString(R.string.toast_already_saved, meal.name),
+                                android.widget.Toast.LENGTH_SHORT).show();
+                        vm.saveMeals();
+                        refreshEmptyState();
+                        return;
+                    }
 
                     Meal meal = (Meal) result.getSerializable(MealDialog.KEY_MEAL);
                     if (position == MealDialog.NEW_ITEM) {

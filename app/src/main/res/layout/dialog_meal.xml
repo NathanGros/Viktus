@@ -262,6 +262,16 @@
             app:iconTint="@color/white"
             app:rippleColor="@color/fab_ripple"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view_save"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            app:rippleColor="@color/fab_ripple"/>
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
