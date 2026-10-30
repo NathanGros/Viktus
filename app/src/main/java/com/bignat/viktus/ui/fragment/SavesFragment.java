@@ -68,6 +68,7 @@ public class SavesFragment extends Fragment {
 
         getChildFragmentManager().setFragmentResultListener(
                 MealDialog.RESULT_KEY, getViewLifecycleOwner(), (key, result) -> {
+                    int position = result.getInt(MealDialog.KEY_POSITION);
                     String action = result.getString(MealDialog.KEY_ACTION);
 
                     if (MealDialog.ACTION_UNSAVE.equals(action)) {
@@ -81,6 +82,11 @@ public class SavesFragment extends Fragment {
                         Toast.makeText(requireContext(),
                                 getString(R.string.toast_planned, meal.name),
                                 Toast.LENGTH_SHORT).show();
+                    } else {
+                        Meal meal = (Meal) result.getSerializable(MealDialog.KEY_MEAL);
+                        adapter.updateMeal(position, meal);
+                        vm.saveMeals();
+                        refreshEmptyState();
                     }
                 });
 

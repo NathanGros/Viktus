@@ -353,6 +353,15 @@ public class MealDialog extends DialogFragment {
             }
         });
 
+        // Edit (Saved mode): swap this popup for the Edit one
+        MaterialButton btnSavedEdit = view.findViewById(R.id.btn_saved_edit);
+        btnSavedEdit.setVisibility(mode == DialogMode.SAVED ? View.VISIBLE : View.GONE);
+        btnSavedEdit.setOnClickListener(v -> {
+            androidx.fragment.app.FragmentManager fm = getParentFragmentManager();
+            dismiss();
+            MealDialog.newEdit(position, original).show(fm, "meal_dialog");
+        });
+
         MaterialButton btnViewSave = view.findViewById(R.id.btn_view_save);
 
         btnViewSave.setOnClickListener(v -> {

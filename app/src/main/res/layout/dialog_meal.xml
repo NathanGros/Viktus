@@ -324,6 +324,16 @@
             android:layout_weight="1" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_saved_edit"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            app:rippleColor="@color/fab_ripple"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
