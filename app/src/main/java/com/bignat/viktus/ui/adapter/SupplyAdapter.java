@@ -71,7 +71,7 @@ public class SupplyAdapter extends RecyclerView.Adapter<SupplyAdapter.ViewHolder
         String q = formatQuantity(holder.itemView.getContext(), s);
         holder.quantity.setText(q);
         holder.quantity.setVisibility(q.isEmpty() ? View.GONE : View.VISIBLE);
-        holder.itemView.setAlpha(s.unit != Unit.UNSPECIFIED && s.quantity <= 0 ? 0.5f : 1f);
+        holder.itemView.setAlpha(s.quantity <= 0 ? 0.5f : 1f);
 
         holder.status.setVisibility(mode == Mode.STATUS ? View.VISIBLE : View.GONE);
         holder.checkBox.setVisibility(mode == Mode.CHECKBOX ? View.VISIBLE : View.GONE);

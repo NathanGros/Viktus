@@ -53,8 +53,9 @@ public class ShoppingCalculator {
         Set<String> ownedNames = new HashSet<>();
         Set<String> unspecifiedStock = new HashSet<>();
         for (Supply s : stock) {
+            if (s.quantity <= 1e-9) continue;   // empty supplies (any unit) don't count as owned
             String n = s.name.trim().toLowerCase(Locale.ROOT);
-            if (s.unit == Unit.UNSPECIFIED || s.quantity > 1e-9) ownedNames.add(n);
+            ownedNames.add(n);
             if (s.unit == Unit.UNSPECIFIED) {
                 unspecifiedStock.add(n);
                 continue;

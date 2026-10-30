@@ -78,25 +78,66 @@
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
-
-    <!-- Edit mode (the unit is shown as a read-only suffix) -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_quantity"
-        style="@style/App.Input"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/quantity"
-        android:textColorHint="@color/text_secondary">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_quantity"
+        <!-- Edit mode (the unit is shown as a read-only suffix) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_quantity"
+            style="@style/App.Input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:singleLine="true"
-            android:textColor="@color/text_primary"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            android:hint="@string/quantity"
+            android:textColorHint="@color/text_secondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_available"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_yes"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/yes"
+                app:cornerRadius="10dp"
+                app:strokeWidth="0dp"
+                app:backgroundTint="@color/toggle_background"
+                android:textColor="@color/toggle_text"
+                app:strokeColor="@color/fab_background" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_no"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/no"
+                app:cornerRadius="10dp"
+                app:strokeWidth="0dp"
+                app:backgroundTint="@color/toggle_background"
+                android:textColor="@color/toggle_text"
+                app:strokeColor="@color/fab_background" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </LinearLayout>
 
     <!-- Footer: Delete (edit only) left, Cancel + confirm right -->
     <LinearLayout

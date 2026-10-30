@@ -145,7 +145,7 @@ public class SuppliesFragment extends Fragment {
     }
 
     private static boolean isEmpty(Supply s) {
-        return s.unit != Unit.UNSPECIFIED && s.quantity <= 1e-9;
+        return s.quantity <= 1e-9;
     }
 
     private void copyToClipboard() {

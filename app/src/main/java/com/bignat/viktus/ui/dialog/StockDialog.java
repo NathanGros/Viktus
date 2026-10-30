@@ -21,6 +21,7 @@ import com.bignat.viktus.model.Supply;
 import com.bignat.viktus.model.Unit;
 import com.bignat.viktus.ui.dialog.ConfirmDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -83,7 +84,7 @@ public class StockDialog extends DialogFragment {
         String originalName = args.getString(KEY_NAME, "");
         Unit originalUnit = Unit.values()[args.getInt(KEY_UNIT, 0)];
         // "Unspecified" supplies have no quantity to edit
-        boolean noQuantity = isEdit && originalUnit == Unit.UNSPECIFIED;
+        boolean unspecifiedEdit = isEdit && originalUnit == Unit.UNSPECIFIED;
 
         TextView title = view.findViewById(R.id.dialog_title);
         TextInputLayout layoutName = view.findViewById(R.id.layout_name);
@@ -94,16 +95,22 @@ public class StockDialog extends DialogFragment {
         Spinner spinnerUnit = view.findViewById(R.id.spinner_unit);
         MaterialButton btnDelete = view.findViewById(R.id.btn_delete);
         MaterialButton btnConfirm = view.findViewById(R.id.btn_confirm);
+        MaterialButtonToggleGroup toggle = view.findViewById(R.id.toggle_available);
 
         // Which parts are visible in which mode
         title.setText(isEdit ? originalName : getString(R.string.add_supply));
         layoutName.setVisibility(isEdit ? View.GONE : View.VISIBLE);
         unitText.setVisibility(isEdit ? View.GONE : View.VISIBLE);
         spinnerUnit.setVisibility(isEdit ? View.GONE : View.VISIBLE);
-        layoutQuantity.setVisibility(isEdit && !noQuantity ? View.VISIBLE : View.GONE);
         btnDelete.setVisibility(isEdit ? View.VISIBLE : View.GONE);
-        btnConfirm.setVisibility(noQuantity ? View.GONE : View.VISIBLE);
+        layoutQuantity.setVisibility(isEdit && !unspecifiedEdit ? View.VISIBLE : View.GONE);
+        toggle.setVisibility(unspecifiedEdit ? View.VISIBLE : View.GONE);
+        btnConfirm.setVisibility(View.VISIBLE);
         btnConfirm.setContentDescription(getString(isEdit ? R.string.done : R.string.add));
+
+        if (unspecifiedEdit && savedInstanceState == null) {
+            toggle.check(args.getDouble(KEY_QUANTITY) > 1e-9 ? R.id.btn_yes : R.id.btn_no);
+        }
 
         // Unit spinner (new mode)
         Unit[] units = Unit.values();
@@ -117,7 +124,7 @@ public class StockDialog extends DialogFragment {
         spinnerUnit.setAdapter(unitAdapter);
 
         // Quantity (edit mode): the unit is a fixed suffix
-        if (isEdit && !noQuantity) {
+        if (isEdit && !unspecifiedEdit) {
             layoutQuantity.setSuffixText(getString(originalUnit.labelRes));
             if (savedInstanceState == null) {
                 double q = args.getDouble(KEY_QUANTITY);
@@ -146,13 +153,17 @@ public class StockDialog extends DialogFragment {
                 result.putInt(KEY_UNIT, spinnerUnit.getSelectedItemPosition());
             } else {
                 double quantity;
-                layoutQuantity.setError(null);
-                try {
-                    quantity = Double.parseDouble(
-                            String.valueOf(inputQuantity.getText()).trim().replace(',', '.'));
-                } catch (NumberFormatException e) {
-                    layoutQuantity.setError(getString(R.string.error_number));
-                    return;
+                if (unspecifiedEdit) {
+                    quantity = toggle.getCheckedButtonId() == R.id.btn_yes ? 1 : 0;
+                } else {
+                    layoutQuantity.setError(null);
+                    try {
+                        quantity = Double.parseDouble(
+                                String.valueOf(inputQuantity.getText()).trim().replace(',', '.'));
+                    } catch (NumberFormatException e) {
+                        layoutQuantity.setError(getString(R.string.error_number));
+                        return;
+                    }
                 }
                 result.putString(KEY_ACTION, ACTION_UPDATE);
                 result.putDouble(KEY_QUANTITY, quantity);

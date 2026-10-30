@@ -49,6 +49,8 @@
     <string name="unit">Select unit:</string>
     <string name="copy_clipboard">Copy to clipboard</string>
     <string name="go_shopping">Go shopping</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Dialog titles (%1$s = the item name) -->
     <string name="add_meal">Add meal</string>
